@@ -1,0 +1,62 @@
+div.container {
+	padding-bottom: 80px;
+}
+
+.color-confirmed {
+	color: #4c95ff;
+}
+.color-active {
+	color: #ffa946;
+}
+.color-deaths {
+	color: #f95d14;
+}
+.color-recovered {
+	color: #58d26b;
+}
+
+div.country-info div.select-wrapper {
+	border-radius: 6px;
+	border: 4px solid #eeeeee;
+}
+
+div.options {
+	padding: 5px 10px;
+	background: #ffffff;
+}
+
+div.ranking-container {
+	width: 100%;
+	height: 800px;
+	overflow: scroll;
+}
+div.ranking-container table {
+	font-size: 0.9rem;
+}
+
+div.graph-container {
+	flex-grow: 1;
+	transition: all 1000ms ease;
+}
+
+footer {
+	padding: 10px 30px;
+	background: #eeeeee;
+}
+footer div.share p {
+	display: inline-block;
+	vertical-align: middle;
+}
+footer div.share ul {
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0;
+	padding: 0;
+}
+footer div.share ul li {
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
