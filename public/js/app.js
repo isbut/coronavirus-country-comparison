@@ -25,9 +25,6 @@ var app = {
 			app.country.change($(this).closest('div.country-info').attr('data-country'), $(this).val());
 		});
 		
-		$('div.country1-info div.select-wrapper').css('border-color', app.cfg.graph_palette[0]);
-		$('div.country2-info div.select-wrapper').css('border-color', app.cfg.graph_palette[1]);
-		
 		$('div.country-add button').on('click', app.country.extraAdd);
 		$(document).on('click', 'div.countries-extra-list button.close', app.country.extraRemove);
 		
@@ -119,16 +116,16 @@ var app = {
 			var country = $(this).closest('div.country-add').find('select').val();
 			var country_data = app.cfg.countries_data[country];
 			
-			var html = '<div class="country_extra" data-country="' + country + '">'
-				+ '<ul class="list-group list-group-horizontal float-left">'
+			var html = '<div class="country-extra" data-country="' + country + '">'
+				+ '<ul class="list-group list-group-horizontal">'
 				+ '<li class="list-group-item list-group-item-secondary">' + country + '</li>'
 				+ '<li class="list-group-item"><strong class="color-population">Population:</strong><span>' + app.aux.numberFormat(country_data['population']) + '</span></li>'
 				+ '<li class="list-group-item"><strong class="color-confirmed">Confirmed:</strong><span>' + app.aux.numberFormat(country_data['confirmed']) + '</span></li>'
 				+ '<li class="list-group-item"><strong class="color-active">Active:</strong><span>' + app.aux.numberFormat(country_data['active']) + '</span></li>'
 				+ '<li class="list-group-item"><strong class="color-deaths">Deaths:</strong><span>' + app.aux.numberFormat(country_data['deaths']) + '</span></li>'
 				+ '<li class="list-group-item"><strong class="color-recovered">Recovered:</strong><span>' + app.aux.numberFormat(country_data['recovered']) + '</span></li>'
+				+'<li class="list-group-item"><button type="button" class="close" title="Delete"><span aria-hidden="true">&times;</span></button></li>'
 				+ '</ul>'
-				+ '<button type="button" class="close float-right" title="Delete"><span aria-hidden="true">&times;</span></button>'
 				+ '</div>';
 			
 			$(html).hide().appendTo('div.countries-extra-list').slideDown();
@@ -147,7 +144,7 @@ var app = {
 		
 		extraRemove: function () {
 			
-			$(this).closest('div.country_extra').slideUp(function () {
+			$(this).closest('div.country-extra').slideUp(function () {
 				
 				$(this).remove();
 				
@@ -157,7 +154,7 @@ var app = {
 				
 				var n = 2;
 				
-				$('div.countries-extra-list div.country_extra').each(function () {
+				$('div.countries-extra-list div.country-extra').each(function () {
 					
 					app.cfg.countries_selected[n] = $(this).attr('data-country');
 					
@@ -478,8 +475,8 @@ var app = {
 			
 			init = typeof init === 'undefined' ? false : init;
 			
-			$('div.menu-mode button').removeClass('btn-secondary').addClass('btn-outline-secondary');
-			$('div.menu-mode button[data-value="' + mode + '"]').removeClass('btn-outline-secondary').addClass('btn-secondary');
+			$('div.menu-mode button').removeClass('btn-dark').addClass('btn-outline-dark');
+			$('div.menu-mode button[data-value="' + mode + '"]').removeClass('btn-outline-dark').addClass('btn-dark');
 			
 			app.cfg.mode = mode;
 			
@@ -493,8 +490,8 @@ var app = {
 			
 			init = typeof init === 'undefined' ? false : init;
 			
-			$('div.menu-start button').removeClass('btn-secondary').addClass('btn-outline-secondary');
-			$('div.menu-start button[data-value="' + start + '"]').removeClass('btn-outline-secondary').addClass('btn-secondary');
+			$('div.menu-start button').removeClass('btn-dark').addClass('btn-outline-dark');
+			$('div.menu-start button[data-value="' + start + '"]').removeClass('btn-outline-dark').addClass('btn-dark');
 			
 			app.cfg.start = parseInt(start);
 			
@@ -508,8 +505,8 @@ var app = {
 			
 			init = typeof init === 'undefined' ? false : init;
 			
-			$('div.menu-graph button').removeClass('btn-secondary').addClass('btn-outline-secondary');
-			$('div.menu-graph button[data-value="' + graph_mode + '"]').removeClass('btn-outline-secondary').addClass('btn-secondary');
+			$('div.menu-graph button').removeClass('btn-dark').addClass('btn-outline-dark');
+			$('div.menu-graph button[data-value="' + graph_mode + '"]').removeClass('btn-outline-dark').addClass('btn-dark');
 			
 			app.cfg.graph_mode = graph_mode;
 			
