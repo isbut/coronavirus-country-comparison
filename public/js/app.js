@@ -495,6 +495,11 @@ var app = {
 						graph_options.yaxis.min = 0;
 						graph_options.yaxis.max = function(max) { return max; };
 					}
+					if (app.cfg.mode == 'absolute') {
+						graph_options.yaxis.title.text = 'Number of cases';
+					} else {
+						graph_options.yaxis.title.text = '% of Population';
+					}
 					break;
 				
 				case 'bar':
@@ -505,6 +510,11 @@ var app = {
 					graph_options.tooltip.followCursor = true;
 					graph_options.tooltip.intersect = false;
 					graph_options.yaxis.min = 0;
+					if (app.cfg.mode == 'absolute') {
+						graph_options.yaxis.title.text = 'Number of cases';
+					} else {
+						graph_options.yaxis.title.text = 'Cases per ' + app.cfg.relative_num + ' habitants';
+					}
 					break;
 				
 			}
