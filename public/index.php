@@ -2,8 +2,8 @@
 
 // Define environement
 define('ENV', 'development');
-define('APP_PATH', '/home/dev1/public_html/Isbut/Coronavirus');
-define('PUBLIC_PATH', '/home/dev1/public_html/Isbut/Coronavirus/public');
+define('APP_PATH', '/path_to_app_folder');
+define('PUBLIC_PATH', '/path_to_public_folder');
 
 // Require composer autoloader
 require APP_PATH . '/vendor/autoload.php';
