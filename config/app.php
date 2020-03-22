@@ -12,11 +12,11 @@ return [
 	],
 	
 	// App url
-	'url' => 'https://www.isbut.com/coronavirus/',
+	'url' => 'https://www.yoururlhere.com/',
 	
 	// Import slug
 	// Change this to a secret string so novody can update remotely
-	'import-slug' => '003727009330c5a0a9328acd2bcf710a',
+	'import-slug' => 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
 	
 	// Files
 	'files' => [
