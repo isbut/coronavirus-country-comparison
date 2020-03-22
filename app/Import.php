@@ -80,25 +80,37 @@ class Import
 						
 						$country = trim($data[$this->config['data-columns']['country']]);
 						
-						if (!isset($countries[$country])
-							&& !in_array($country, $this->config['data-countries-disappeared'])) {
+						if (!in_array($country, $this->config['data-countries-disappeared'])) {
 							
-							if (!isset($this->config['countries'][$country])) {
-								// New country detected. Have to update population manually!
-								$log .= "New country detected: '" . $country . "'.\n";
+							if (!isset($countries[$country])) {
+								// New country
+								
+								if (!isset($this->config['countries'][$country])) {
+									// New country detected. Have to update population manually!
+									$log .= "New country detected: '" . $country . "'.\n";
+								}
+								
+								// Update countries list
+								$countries[$country] = [
+									'normalized' => normalize($country),
+									'population' => isset($this->config['countries'][$country]) ? $this->config['countries'][$country]['population'] : 0,
+									'confirmed' => intval(trim($data[$this->config['data-columns']['confirmed']])),
+									'active' => intval(trim($data[$this->config['data-columns']['confirmed']])) - intval(trim($data[$this->config['data-columns']['deaths']])) - intval(trim($data[$this->config['data-columns']['recovered']])),
+									'deaths' => intval(trim($data[$this->config['data-columns']['deaths']])),
+									'recovered' => intval(trim($data[$this->config['data-columns']['recovered']])),
+									'lat' => floatval(trim($data[$this->config['data-columns']['lat']])),
+									'lng' => floatval(trim($data[$this->config['data-columns']['lng']])),
+								];
+								
+							} else {
+								// Existing country (province)
+								
+								$countries[$country]['confirmed'] += intval(trim($data[$this->config['data-columns']['confirmed']]));
+								$countries[$country]['active'] += (intval(trim($data[$this->config['data-columns']['confirmed']])) - intval(trim($data[$this->config['data-columns']['deaths']])) - intval(trim($data[$this->config['data-columns']['recovered']])));
+								$countries[$country]['deaths'] += intval(trim($data[$this->config['data-columns']['deaths']]));
+								$countries[$country]['recovered'] += intval(trim($data[$this->config['data-columns']['recovered']]));
+								
 							}
-							
-							// Update countries list
-							$countries[$country] = [
-								'normalized' => normalize($country),
-								'population' => isset($this->config['countries'][$country]) ? $this->config['countries'][$country]['population'] : 0,
-								'confirmed' => intval(trim($data[$this->config['data-columns']['confirmed']])),
-								'active' => intval(trim($data[$this->config['data-columns']['confirmed']])) - intval(trim($data[$this->config['data-columns']['deaths']])) - intval(trim($data[$this->config['data-columns']['recovered']])),
-								'deaths' => intval(trim($data[$this->config['data-columns']['deaths']])),
-								'recovered' => intval(trim($data[$this->config['data-columns']['recovered']])),
-								'lat' => floatval(trim($data[$this->config['data-columns']['lat']])),
-								'lng' => floatval(trim($data[$this->config['data-columns']['lng']])),
-							];
 							
 						}
 						
