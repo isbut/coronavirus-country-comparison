@@ -5,4 +5,4 @@
 // Home
 $router->get('/', '\App\Main@index');
 // Import
-$router->get('/import', '\App\Import@execute');
+$router->get('/' . $this->config['import-slug'], '\App\Import@execute');

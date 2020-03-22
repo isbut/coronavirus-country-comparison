@@ -1,0 +1,549 @@
+--------------------
+IMPORT START: 2020-03-20 11:38:49
+Remote file 'https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/03-19-2020.csv' loaded.
+Local file '/home/dev1/public_html/Isbut/Coronavirus/public/data/csv/03-19-2020.csv' saved.
+Parsing countries list...
+New country detected: 'Taiwan*'.
+New country detected: 'Uruguay'.
+New country detected: 'Venezuela'.
+New country detected: 'Liechtenstein'.
+New country detected: 'Uzbekistan'.
+New country detected: 'Afghanistan'.
+New country detected: 'Ghana'.
+New country detected: 'Guatemala'.
+New country detected: 'Trinidad and Tobago'.
+New country detected: 'Rwanda'.
+New country detected: 'Guyana'.
+New country detected: 'Monaco'.
+New country detected: 'Equatorial Guinea'.
+New country detected: 'Seychelles'.
+New country detected: 'Tanzania'.
+New country detected: 'Barbados'.
+New country detected: 'Bahamas, The'.
+New country detected: 'Congo (Brazzaville)'.
+New country detected: 'Kyrgyzstan'.
+New country detected: 'Mauritius'.
+New country detected: 'Mayotte'.
+New country detected: 'Montenegro'.
+New country detected: 'Namibia'.
+New country detected: 'Benin'.
+New country detected: 'Kosovo'.
+New country detected: 'Liberia'.
+New country detected: 'Mauritania'.
+New country detected: 'Saint Lucia'.
+New country detected: 'Zambia'.
+New country detected: 'Central African Republic'.
+New country detected: 'Chad'.
+New country detected: 'Djibouti'.
+New country detected: 'El Salvador'.
+New country detected: 'Eswatini'.
+New country detected: 'Fiji'.
+New country detected: 'Gabon'.
+New country detected: 'Gambia, The'.
+New country detected: 'Nicaragua'.
+New country detected: 'Saint Vincent and the Grenadines'.
+New country detected: 'Somalia'.
+New country detected: 'Suriname'.
+New country detected: 'Greenland'.
+New country detected: 'Guam'.
+New country detected: 'Guernsey'.
+New country detected: 'Jersey'.
+New country detected: 'Puerto Rico'.
+New country detected: 'Republic of the Congo'.
+New country detected: 'The Bahamas'.
+New country detected: 'The Gambia'.
+Countries list parsed: 293 items.
+Parsing countries info...
+Countries info parsed: 6784 items.
+Recalculating data...
+Data recalculated.
+Writing JSON files...
+File '/home/dev1/public_html/Isbut/Coronavirus/public/data/json/countries.json' saved.
+File '/home/dev1/public_html/Isbut/Coronavirus/public/data/json/' saved.
+IMPORT FINISHED: 2020-03-20 11:38:49
+
+--------------------
+IMPORT START: 2020-03-20 11:40:26
+Remote file 'https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/03-19-2020.csv' loaded.
+Local file '/home/dev1/public_html/Isbut/Coronavirus/public/data/csv/03-19-2020.csv' saved.
+Parsing countries list...
+New country detected: 'Taiwan*'.
+New country detected: 'Uruguay'.
+New country detected: 'Venezuela'.
+New country detected: 'Liechtenstein'.
+New country detected: 'Uzbekistan'.
+New country detected: 'Afghanistan'.
+New country detected: 'Ghana'.
+New country detected: 'Guatemala'.
+New country detected: 'Trinidad and Tobago'.
+New country detected: 'Rwanda'.
+New country detected: 'Guyana'.
+New country detected: 'Monaco'.
+New country detected: 'Equatorial Guinea'.
+New country detected: 'Seychelles'.
+New country detected: 'Tanzania'.
+New country detected: 'Barbados'.
+New country detected: 'Bahamas, The'.
+New country detected: 'Congo (Brazzaville)'.
+New country detected: 'Kyrgyzstan'.
+New country detected: 'Mauritius'.
+New country detected: 'Mayotte'.
+New country detected: 'Montenegro'.
+New country detected: 'Namibia'.
+New country detected: 'Benin'.
+New country detected: 'Kosovo'.
+New country detected: 'Liberia'.
+New country detected: 'Mauritania'.
+New country detected: 'Saint Lucia'.
+New country detected: 'Zambia'.
+New country detected: 'Central African Republic'.
+New country detected: 'Chad'.
+New country detected: 'Djibouti'.
+New country detected: 'El Salvador'.
+New country detected: 'Eswatini'.
+New country detected: 'Fiji'.
+New country detected: 'Gabon'.
+New country detected: 'Gambia, The'.
+New country detected: 'Nicaragua'.
+New country detected: 'Saint Vincent and the Grenadines'.
+New country detected: 'Somalia'.
+New country detected: 'Suriname'.
+New country detected: 'Greenland'.
+New country detected: 'Guam'.
+New country detected: 'Guernsey'.
+New country detected: 'Jersey'.
+New country detected: 'Puerto Rico'.
+New country detected: 'Republic of the Congo'.
+New country detected: 'The Bahamas'.
+New country detected: 'The Gambia'.
+Countries list parsed: 293 items.
+Parsing countries info...
+Countries info parsed: 6784 items.
+Recalculating data...
+Data recalculated.
+Writing JSON files...
+File '/home/dev1/public_html/Isbut/Coronavirus/public/data/json/countries.json' saved.
+File '/home/dev1/public_html/Isbut/Coronavirus/public/data/json/app-info.json' saved.
+IMPORT FINISHED: 2020-03-20 11:40:26
+
+--------------------
+IMPORT START: 2020-03-20 11:42:04
+Remote file 'https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/03-19-2020.csv' loaded.
+Local file '/home/dev1/public_html/Isbut/Coronavirus/data/csv/03-19-2020.csv' saved.
+Parsing countries list...
+New country detected: 'Taiwan*'.
+New country detected: 'Uruguay'.
+New country detected: 'Venezuela'.
+New country detected: 'Liechtenstein'.
+New country detected: 'Uzbekistan'.
+New country detected: 'Afghanistan'.
+New country detected: 'Ghana'.
+New country detected: 'Guatemala'.
+New country detected: 'Trinidad and Tobago'.
+New country detected: 'Rwanda'.
+New country detected: 'Guyana'.
+New country detected: 'Monaco'.
+New country detected: 'Equatorial Guinea'.
+New country detected: 'Seychelles'.
+New country detected: 'Tanzania'.
+New country detected: 'Barbados'.
+New country detected: 'Bahamas, The'.
+New country detected: 'Congo (Brazzaville)'.
+New country detected: 'Kyrgyzstan'.
+New country detected: 'Mauritius'.
+New country detected: 'Mayotte'.
+New country detected: 'Montenegro'.
+New country detected: 'Namibia'.
+New country detected: 'Benin'.
+New country detected: 'Kosovo'.
+New country detected: 'Liberia'.
+New country detected: 'Mauritania'.
+New country detected: 'Saint Lucia'.
+New country detected: 'Zambia'.
+New country detected: 'Central African Republic'.
+New country detected: 'Chad'.
+New country detected: 'Djibouti'.
+New country detected: 'El Salvador'.
+New country detected: 'Eswatini'.
+New country detected: 'Fiji'.
+New country detected: 'Gabon'.
+New country detected: 'Gambia, The'.
+New country detected: 'Nicaragua'.
+New country detected: 'Saint Vincent and the Grenadines'.
+New country detected: 'Somalia'.
+New country detected: 'Suriname'.
+New country detected: 'Greenland'.
+New country detected: 'Guam'.
+New country detected: 'Guernsey'.
+New country detected: 'Jersey'.
+New country detected: 'Puerto Rico'.
+New country detected: 'Republic of the Congo'.
+New country detected: 'The Bahamas'.
+New country detected: 'The Gambia'.
+Countries list parsed: 293 items.
+Parsing countries info...
+Countries info parsed: 6784 items.
+Recalculating data...
+Data recalculated.
+Writing JSON files...
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/countries.json' saved.
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/app-info.json' saved.
+IMPORT FINISHED: 2020-03-20 11:42:05
+
+--------------------
+IMPORT START: 2020-03-20 11:45:05
+Could not load remote file 'https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/01-01-1970.csv'.
+IMPORT FINISHED: 2020-03-20 11:45:05
+
+--------------------
+IMPORT START: 2020-03-20 11:45:23
+Remote file 'https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/03-18-2020.csv' loaded.
+Local file '/home/dev1/public_html/Isbut/Coronavirus/data/csv/03-18-2020.csv' saved.
+Parsing countries list...
+New country detected: 'Taiwan*'.
+New country detected: 'Uruguay'.
+New country detected: 'Venezuela'.
+New country detected: 'Liechtenstein'.
+New country detected: 'Afghanistan'.
+New country detected: 'Uzbekistan'.
+New country detected: 'Rwanda'.
+New country detected: 'Ghana'.
+New country detected: 'Guyana'.
+New country detected: 'Monaco'.
+New country detected: 'Trinidad and Tobago'.
+New country detected: 'Guatemala'.
+New country detected: 'Equatorial Guinea'.
+New country detected: 'Seychelles'.
+New country detected: 'Kyrgyzstan'.
+New country detected: 'Mauritius'.
+New country detected: 'Mayotte'.
+New country detected: 'Tanzania'.
+New country detected: 'Barbados'.
+New country detected: 'Benin'.
+New country detected: 'Kosovo'.
+New country detected: 'Liberia'.
+New country detected: 'Namibia'.
+New country detected: 'Saint Lucia'.
+New country detected: 'Zambia'.
+New country detected: 'Central African Republic'.
+New country detected: 'Congo (Brazzaville)'.
+New country detected: 'Djibouti'.
+New country detected: 'Eswatini'.
+New country detected: 'Gabon'.
+New country detected: 'Gambia, The'.
+New country detected: 'Greenland'.
+New country detected: 'Mauritania'.
+New country detected: 'Montenegro'.
+New country detected: 'Saint Vincent and the Grenadines'.
+New country detected: 'Somalia'.
+New country detected: 'Suriname'.
+New country detected: 'The Bahamas'.
+New country detected: 'Guam'.
+New country detected: 'Guernsey'.
+New country detected: 'Jersey'.
+New country detected: 'Puerto Rico'.
+New country detected: 'Republic of the Congo'.
+New country detected: 'The Gambia'.
+Countries list parsed: 285 items.
+Parsing countries info...
+Countries info parsed: 7069 items.
+Recalculating data...
+Data recalculated.
+Writing JSON files...
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/countries.json' saved.
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/app-info.json' saved.
+IMPORT FINISHED: 2020-03-20 11:45:24
+
+--------------------
+IMPORT START: 2020-03-20 11:45:46
+Remote file 'https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/03-19-2020.csv' loaded.
+Local file '/home/dev1/public_html/Isbut/Coronavirus/data/csv/03-19-2020.csv' saved.
+Parsing countries list...
+New country detected: 'Taiwan*'.
+New country detected: 'Uruguay'.
+New country detected: 'Venezuela'.
+New country detected: 'Liechtenstein'.
+New country detected: 'Uzbekistan'.
+New country detected: 'Afghanistan'.
+New country detected: 'Ghana'.
+New country detected: 'Guatemala'.
+New country detected: 'Trinidad and Tobago'.
+New country detected: 'Rwanda'.
+New country detected: 'Guyana'.
+New country detected: 'Monaco'.
+New country detected: 'Equatorial Guinea'.
+New country detected: 'Seychelles'.
+New country detected: 'Tanzania'.
+New country detected: 'Barbados'.
+New country detected: 'Bahamas, The'.
+New country detected: 'Congo (Brazzaville)'.
+New country detected: 'Kyrgyzstan'.
+New country detected: 'Mauritius'.
+New country detected: 'Mayotte'.
+New country detected: 'Montenegro'.
+New country detected: 'Namibia'.
+New country detected: 'Benin'.
+New country detected: 'Kosovo'.
+New country detected: 'Liberia'.
+New country detected: 'Mauritania'.
+New country detected: 'Saint Lucia'.
+New country detected: 'Zambia'.
+New country detected: 'Central African Republic'.
+New country detected: 'Chad'.
+New country detected: 'Djibouti'.
+New country detected: 'El Salvador'.
+New country detected: 'Eswatini'.
+New country detected: 'Fiji'.
+New country detected: 'Gabon'.
+New country detected: 'Gambia, The'.
+New country detected: 'Nicaragua'.
+New country detected: 'Saint Vincent and the Grenadines'.
+New country detected: 'Somalia'.
+New country detected: 'Suriname'.
+New country detected: 'Greenland'.
+New country detected: 'Guam'.
+New country detected: 'Guernsey'.
+New country detected: 'Jersey'.
+New country detected: 'Puerto Rico'.
+New country detected: 'Republic of the Congo'.
+New country detected: 'The Bahamas'.
+New country detected: 'The Gambia'.
+Countries list parsed: 293 items.
+Parsing countries info...
+Countries info parsed: 7069 items.
+Recalculating data...
+Data recalculated.
+Writing JSON files...
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/countries.json' saved.
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/app-info.json' saved.
+IMPORT FINISHED: 2020-03-20 11:45:47
+
+--------------------
+IMPORT START: 2020-03-20 11:52:15
+Remote file 'https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/03-19-2020.csv' loaded.
+Local file '/home/dev1/public_html/Isbut/Coronavirus/data/csv/03-19-2020.csv' saved.
+Parsing countries list...
+New country detected: 'Taiwan*'.
+New country detected: 'Uruguay'.
+New country detected: 'Venezuela'.
+New country detected: 'Liechtenstein'.
+New country detected: 'Uzbekistan'.
+New country detected: 'Afghanistan'.
+New country detected: 'Ghana'.
+New country detected: 'Guatemala'.
+New country detected: 'Trinidad and Tobago'.
+New country detected: 'Rwanda'.
+New country detected: 'Guyana'.
+New country detected: 'Monaco'.
+New country detected: 'Equatorial Guinea'.
+New country detected: 'Seychelles'.
+New country detected: 'Tanzania'.
+New country detected: 'Barbados'.
+New country detected: 'Bahamas, The'.
+New country detected: 'Congo (Brazzaville)'.
+New country detected: 'Kyrgyzstan'.
+New country detected: 'Mauritius'.
+New country detected: 'Mayotte'.
+New country detected: 'Montenegro'.
+New country detected: 'Namibia'.
+New country detected: 'Benin'.
+New country detected: 'Kosovo'.
+New country detected: 'Liberia'.
+New country detected: 'Mauritania'.
+New country detected: 'Saint Lucia'.
+New country detected: 'Zambia'.
+New country detected: 'Central African Republic'.
+New country detected: 'Chad'.
+New country detected: 'Djibouti'.
+New country detected: 'El Salvador'.
+New country detected: 'Eswatini'.
+New country detected: 'Fiji'.
+New country detected: 'Gabon'.
+New country detected: 'Gambia, The'.
+New country detected: 'Nicaragua'.
+New country detected: 'Saint Vincent and the Grenadines'.
+New country detected: 'Somalia'.
+New country detected: 'Suriname'.
+New country detected: 'Greenland'.
+New country detected: 'Guam'.
+New country detected: 'Guernsey'.
+New country detected: 'Jersey'.
+New country detected: 'Puerto Rico'.
+New country detected: 'Republic of the Congo'.
+New country detected: 'The Bahamas'.
+New country detected: 'The Gambia'.
+Countries list parsed: 293 items.
+Parsing countries info...
+Countries info parsed: 7069 items.
+Recalculating data...
+Data recalculated.
+Writing JSON files...
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/countries.json' saved.
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/app-info.json' saved.
+IMPORT FINISHED: 2020-03-20 11:52:15
+
+--------------------
+IMPORT START: 2020-03-22 07:43:58
+Remote file 'https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/03-21-2020.csv' loaded.
+Local file '/home/dev1/public_html/Isbut/Coronavirus/data/csv/03-21-2020.csv' saved.
+Parsing countries list...
+New country detected: 'Taiwan*'.
+New country detected: 'Uruguay'.
+New country detected: 'Venezuela'.
+New country detected: 'Trinidad and Tobago'.
+New country detected: 'Uzbekistan'.
+New country detected: 'Liechtenstein'.
+New country detected: 'Afghanistan'.
+New country detected: 'Ghana'.
+New country detected: 'Guatemala'.
+New country detected: 'Rwanda'.
+New country detected: 'Kyrgyzstan'.
+New country detected: 'Mauritius'.
+New country detected: 'Montenegro'.
+New country detected: 'Monaco'.
+New country detected: 'Guyana'.
+New country detected: 'Mayotte'.
+New country detected: 'Seychelles'.
+New country detected: 'Barbados'.
+New country detected: 'Equatorial Guinea'.
+New country detected: 'Tanzania'.
+New country detected: 'Bahamas, The'.
+New country detected: 'Gabon'.
+New country detected: 'Suriname'.
+New country detected: 'Cabo Verde'.
+New country detected: 'Central African Republic'.
+New country detected: 'Congo (Brazzaville)'.
+New country detected: 'El Salvador'.
+New country detected: 'Liberia'.
+New country detected: 'Madagascar'.
+New country detected: 'Namibia'.
+New country detected: 'Zimbabwe'.
+New country detected: 'Angola'.
+New country detected: 'Benin'.
+New country detected: 'Haiti'.
+New country detected: 'Kosovo'.
+New country detected: 'Mauritania'.
+New country detected: 'Nicaragua'.
+New country detected: 'Saint Lucia'.
+New country detected: 'Zambia'.
+New country detected: 'Cape Verde'.
+New country detected: 'Chad'.
+New country detected: 'Djibouti'.
+New country detected: 'East Timor'.
+New country detected: 'Eritrea'.
+New country detected: 'Eswatini'.
+New country detected: 'Fiji'.
+New country detected: 'Gambia, The'.
+New country detected: 'Niger'.
+New country detected: 'Papua New Guinea'.
+New country detected: 'Saint Vincent and the Grenadines'.
+New country detected: 'Somalia'.
+New country detected: 'Uganda'.
+New country detected: 'Greenland'.
+New country detected: 'Guam'.
+New country detected: 'Guernsey'.
+New country detected: 'Jersey'.
+New country detected: 'Puerto Rico'.
+New country detected: 'Republic of the Congo'.
+New country detected: 'The Bahamas'.
+New country detected: 'The Gambia'.
+Countries list parsed: 305 items.
+Parsing countries info...
+Countries info parsed: 7374 items.
+Recalculating data...
+Data recalculated.
+Writing JSON files...
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/countries.json' saved.
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/app-info.json' saved.
+IMPORT FINISHED: 2020-03-22 07:43:58
+
+--------------------
+IMPORT START: 2020-03-22 07:45:52
+Remote file 'https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/03-20-2020.csv' loaded.
+Local file '/home/dev1/public_html/Isbut/Coronavirus/data/csv/03-20-2020.csv' saved.
+Parsing countries list...
+New country detected: 'Taiwan*'.
+New country detected: 'Uruguay'.
+New country detected: 'Venezuela'.
+New country detected: 'Uzbekistan'.
+New country detected: 'Liechtenstein'.
+New country detected: 'Afghanistan'.
+New country detected: 'Rwanda'.
+New country detected: 'Ghana'.
+New country detected: 'Montenegro'.
+New country detected: 'Guatemala'.
+New country detected: 'Mauritius'.
+New country detected: 'Monaco'.
+New country detected: 'Trinidad and Tobago'.
+New country detected: 'Guyana'.
+New country detected: 'Seychelles'.
+New country detected: 'Equatorial Guinea'.
+New country detected: 'Kyrgyzstan'.
+New country detected: 'Mayotte'.
+New country detected: 'Tanzania'.
+New country detected: 'Barbados'.
+New country detected: 'Suriname'.
+New country detected: 'Bahamas, The'.
+New country detected: 'Central African Republic'.
+New country detected: 'Congo (Brazzaville)'.
+New country detected: 'Gabon'.
+New country detected: 'Madagascar'.
+New country detected: 'Namibia'.
+New country detected: 'Benin'.
+New country detected: 'Haiti'.
+New country detected: 'Kosovo'.
+New country detected: 'Liberia'.
+New country detected: 'Mauritania'.
+New country detected: 'Saint Lucia'.
+New country detected: 'Zambia'.
+New country detected: 'Angola'.
+New country detected: 'Cabo Verde'.
+New country detected: 'Chad'.
+New country detected: 'Djibouti'.
+New country detected: 'El Salvador'.
+New country detected: 'Eswatini'.
+New country detected: 'Fiji'.
+New country detected: 'Gambia, The'.
+New country detected: 'Nicaragua'.
+New country detected: 'Niger'.
+New country detected: 'Papua New Guinea'.
+New country detected: 'Saint Vincent and the Grenadines'.
+New country detected: 'Somalia'.
+New country detected: 'Zimbabwe'.
+New country detected: 'Greenland'.
+New country detected: 'Guam'.
+New country detected: 'Guernsey'.
+New country detected: 'Jersey'.
+New country detected: 'Puerto Rico'.
+New country detected: 'Republic of the Congo'.
+New country detected: 'The Bahamas'.
+New country detected: 'The Gambia'.
+Countries list parsed: 300 items.
+Parsing countries info...
+Countries info parsed: 7674 items.
+Recalculating data...
+Data recalculated.
+Writing JSON files...
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/countries.json' saved.
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/app-info.json' saved.
+IMPORT FINISHED: 2020-03-22 07:45:53
+
+--------------------
+IMPORT START: 2020-03-22 12:28:01
+Remote file 'https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/03-21-2020.csv' loaded.
+Local file '/home/dev1/public_html/Isbut/Coronavirus/data/csv/03-21-2020.csv' saved.
+Parsing countries list...
+New country detected: 'Cape Verde'.
+New country detected: 'East Timor'.
+New country detected: 'Eritrea'.
+New country detected: 'Uganda'.
+Countries list parsed: 305 items.
+Parsing countries info...
+Countries info parsed: 7674 items.
+Recalculating data...
+Data recalculated.
+Writing JSON files...
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/countries.json' saved.
+File '/home/dev1/public_html/Isbut/Coronavirus/data/json/app-info.json' saved.
+IMPORT FINISHED: 2020-03-22 12:28:01
+

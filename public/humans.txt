@@ -3,11 +3,11 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Isbut Interactive -- www.isbut.com
 
 # THANKS
 
-    <name>
+    Johns Hopkins CSSE
 
 # TECHNOLOGY COLOPHON
 

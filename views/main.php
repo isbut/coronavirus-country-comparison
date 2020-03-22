@@ -15,11 +15,12 @@
 						</select>
 					</div>
 					<ul class="list-group">
-						<li class="info-population"><strong class="color-population">Population: </strong><span></span></li>
-						<li class="info-confirmed"><strong class="color-confirmed">Confirmed: </strong><span></span></li>
-						<li class="info-active"><strong class="color-active">Active: </strong><span></span></li>
-						<li class="info-deaths"><strong class="color-deaths">Deaths: </strong><span></span></li>
+						<li class="info-population"><strong class="color-population">Population:</strong> <span></span></li>
+						<li class="info-confirmed"><strong class="color-confirmed">Confirmed:</strong> <span></span></li>
+						<li class="info-active"><strong class="color-active">Active:</strong> <span></span></li>
+						<li class="info-deaths"><strong class="color-deaths">Deaths:</strong> <span></span></li>
 						<li class="info-recovered"><strong class="color-recovered">Recovered:</strong><span></span></li>
+						<li class="info-start"><strong class="color-start">Graph start:</strong> <span></span></li>
 					</ul>
 				</div>
 			</div>
@@ -36,11 +37,12 @@
 						</select>
 					</div>
 					<ul class="list-group">
-						<li class="info-population"><strong class="color-population">Population:</strong><span></span></li>
-						<li class="info-confirmed"><strong class="color-confirmed">Confirmed:</strong><span></span></li>
-						<li class="info-active"><strong class="color-active">Active:</strong><span></span></li>
-						<li class="info-deaths"><strong class="color-deaths">Deaths:</strong><span></span></li>
-						<li class="info-recovered"><strong class="color-recovered">Recovered:</strong><span></span></li>
+						<li class="info-population"><strong class="color-population">Population:</strong> <span></span></li>
+						<li class="info-confirmed"><strong class="color-confirmed">Confirmed:</strong> <span></span></li>
+						<li class="info-active"><strong class="color-active">Active:</strong> <span></span></li>
+						<li class="info-deaths"><strong class="color-deaths">Deaths:</strong> <span></span></li>
+						<li class="info-recovered"><strong class="color-recovered">Recovered:</strong> <span></span></li>
+						<li class="info-start"><strong class="color-start">Graph start:</strong> <span></span></li>
 					</ul>
 				</div>
 			</div>
@@ -49,7 +51,7 @@
 			
 		</div>
 
-		<div class="row">
+		<div class="row position-relative">
 			<div class="country-add col-12 col-md-8">
 				<div class="input-group">
 					<select name="ca" class="custom-select">
@@ -65,6 +67,9 @@
 						</button>
 					</div>
 				</div>
+			</div>
+			<div class="country-add-info col-12 col-md-4">
+				You can add up to <?= $this->config['defaults']['countries_max'] - 2 ?> extra countries.
 			</div>
 		</div>
 
@@ -102,7 +107,7 @@
 		
 			<div class="graph-container col-md-6">
 				
-				<div class="card">
+				<div class="card position-relative">
 					<div class="resizer">
 						<button class="btn float-right"><i class="fas fa-arrows-alt-h"></i></button>
 					</div>
@@ -115,7 +120,7 @@
 			
 			<div class="graph-container col-md-6">
 				
-				<div class="card">
+				<div class="card position-relative">
 					<div class="resizer">
 						<button class="btn float-right"><i class="fas fa-arrows-alt-h"></i></button>
 					</div>
@@ -135,7 +140,7 @@
 			
 			<div class="graph-container col-md-6">
 				
-				<div class="card">
+				<div class="card position-relative">
 					<div class="resizer">
 						<button class="btn float-right"><i class="fas fa-arrows-alt-h"></i></button>
 					</div>
@@ -148,7 +153,7 @@
 			
 			<div class="graph-container col-md-6">
 				
-				<div class="card">
+				<div class="card position-relative">
 					<div class="resizer">
 						<button class="btn float-right"><i class="fas fa-arrows-alt-h"></i></button>
 					</div>
@@ -165,7 +170,7 @@
 			
 			<div class="col-md-12">
 				
-				<div class="card">
+				<div class="card position-relative">
 					<div class="card-body">
 						<div id="graph-confirmed_daily" class="graph"></div>
 					</div>
@@ -175,7 +180,7 @@
 			
 			<div class="col-md-12">
 				
-				<div class="card">
+				<div class="card position-relative">
 					<div class="card-body">
 						<div id="graph-deaths_daily" class="graph"></div>
 					</div>
@@ -185,7 +190,7 @@
 			
 			<div class="col-md-12">
 				
-				<div class="card">
+				<div class="card position-relative">
 					<div class="card-body">
 						<div id="graph-recovered_daily" class="graph"></div>
 					</div>
@@ -193,6 +198,11 @@
 				
 			</div>
 			
+		</div>
+		
+		<div class="disclaimer">
+			(*) Isbut declines all responsibility about the accuracy and veracity of the data shown here.<br />
+			This information must not be used for medical purposes.
 		</div>
 		
 	</div>
@@ -230,7 +240,7 @@
 						echo '<tr>
 									<td>' . $n . '</td>
 									<td>' . $country . '</td>
-									<td>' . $country_data['confirmed'] . '</td>
+									<td>' . numberFormat($country_data['confirmed']) . '</td>
 									<td>' . $country_data['active'] . '</td>
 									<td>' . $country_data['deaths'] . '</td>
 									<td>' . $country_data['recovered'] . '</td>

@@ -2,12 +2,16 @@ var app = {
 	
 	cfg: {
 		
+		app_info: {},
 		countries_selected: {},
 		mode: '',
 		start: 0,
 		graph_mode: '',
 		relative_num: 0,
 		countries_data: {},
+		graph_palette: [],
+		info_palette: [],
+		xaxis_lapses: {},
 		initialized: false,
 		charts: {
 			confirmed: null,
@@ -25,6 +29,9 @@ var app = {
 			app.country.change($(this).closest('div.country-info').attr('data-country'), $(this).val());
 		});
 		
+		$('header div.update mark').html(app.cfg.app_info.last_update);
+		
+		$('div.country-add select').val($('div.country-add select option').first().attr('value'));
 		$('div.country-add button').on('click', app.country.extraAdd);
 		$(document).on('click', 'div.countries-extra-list button.close', app.country.extraRemove);
 		
@@ -44,30 +51,58 @@ var app = {
 		
 		app.cfg.ranking_table = $('#table-ranking').DataTable({
 			ordering: true,
-			colReorder: true,
 			paging: false,
 			searching: false,
 			info: false,
 			columns: [
 				{ orderable: false },
-				{ orderable: true },
-				{ orderable: true, type: 'num' },
-				{ orderable: true, type: 'num', visible: false },
-				{ orderable: true, type: 'num', visible: false },
-				{ orderable: true, type: 'num', visible: false },
+				{  },
+				{  },
+				{ visible: false },
+				{ visible: false },
+				{ visible: false },
 			],
 			order: [
 				[2, 'desc']
 			],
 			language: {
-				thousands: '.',
+				decimal: ",",
+				thousands: "."
 			},
-			initComplete:  app.ranking.reorder,
+			initComplete: function () {
+				app.ranking.reorder();
+				$('#ranking-menu').fadeIn();
+				$('#table-ranking').fadeIn();
+			},
 		});
 		app.cfg.ranking_table
 			.on('order.dt', app.ranking.reorder);
 		
 		$('#ranking-menu button.dropdown-item').on('click', app.ranking.change);
+		
+		$('footer a.email').attr('href', 'mailto:coronavirus@isbut.com');
+		
+		var copylink = new ClipboardJS('footer .share .copy');
+		copylink.on('success', function(e) {
+			$('footer .share .copy').tooltip({
+				placement: 'top',
+				trigger: 'manual',
+				title: 'Link copied',
+			}).tooltip('show');
+			setTimeout(function () {
+				$('footer .share .copy').tooltip('hide').tooltip('dispose');
+			}, 2000);
+		});
+		copylink.on('error', function(e) {
+			$('footer .share .copy').tooltip({
+				placement: 'top',
+				trigger: 'manual',
+				title: 'Link NOT copied, sorry!',
+			}).tooltip('show');
+			setTimeout(function () {
+				$('footer .share .copy').tooltip('hide').tooltip('dispose');
+			}, 2000);
+		});
 		
 		app.country.change(0, app.cfg.countries_selected[0], true);
 		app.country.change(1, app.cfg.countries_selected[1], true);
@@ -115,26 +150,27 @@ var app = {
 			
 			var country = $(this).closest('div.country-add').find('select').val();
 			var country_data = app.cfg.countries_data[country];
+			var extra_num = $('div.countries-extra-list div.country-extra').length;
 			
-			var html = '<div class="country-extra" data-country="' + country + '">'
+			var html = '<div class="country-extra" data-country="' + (extra_num + 2) + '" data-country-name="' + country + '">'
 				+ '<ul class="list-group list-group-horizontal">'
-				+ '<li class="list-group-item list-group-item-secondary">' + country + '</li>'
-				+ '<li class="list-group-item"><strong class="color-population">Population:</strong><span>' + app.aux.numberFormat(country_data['population']) + '</span></li>'
-				+ '<li class="list-group-item"><strong class="color-confirmed">Confirmed:</strong><span>' + app.aux.numberFormat(country_data['confirmed']) + '</span></li>'
-				+ '<li class="list-group-item"><strong class="color-active">Active:</strong><span>' + app.aux.numberFormat(country_data['active']) + '</span></li>'
-				+ '<li class="list-group-item"><strong class="color-deaths">Deaths:</strong><span>' + app.aux.numberFormat(country_data['deaths']) + '</span></li>'
-				+ '<li class="list-group-item"><strong class="color-recovered">Recovered:</strong><span>' + app.aux.numberFormat(country_data['recovered']) + '</span></li>'
-				+'<li class="list-group-item"><button type="button" class="close" title="Delete"><span aria-hidden="true">&times;</span></button></li>'
+				+ '<li class="list-group-item list-group-item-secondary">' + country
+				+ '<div class="info-start"><strong class="color-start">Graph start:</strong> <span></span></div>'
+				+ '</li>'
+				+ '<li class="list-group-item"><strong class="color-population">Population:</strong> <span>' + app.aux.numberFormat(country_data['population']) + '</span></li>'
+				+ '<li class="list-group-item"><strong class="color-confirmed">Confirmed:</strong> <span>' + app.aux.numberFormat(country_data['confirmed']) + '</span></li>'
+				+ '<li class="list-group-item"><strong class="color-active">Active:</strong> <span>' + app.aux.numberFormat(country_data['active']) + '</span></li>'
+				+ '<li class="list-group-item"><strong class="color-deaths">Deaths:</strong> <span>' + app.aux.numberFormat(country_data['deaths']) + '</span></li>'
+				+ '<li class="list-group-item"><strong class="color-recovered">Recovered:</strong> <span>' + app.aux.numberFormat(country_data['recovered']) + '</span></li>'
+				+ '<li class="list-group-item"><button type="button" class="close" title="Delete"><span aria-hidden="true">&times;</span></button></li>'
 				+ '</ul>'
 				+ '</div>';
 			
 			$(html).hide().appendTo('div.countries-extra-list').slideDown();
 			
-			var extra_num = $('div.countries-extra-list div').length;
+			app.cfg.countries_selected[extra_num + 2] = country;
 			
-			app.cfg.countries_selected[extra_num + 1] = country;
-			
-			if (extra_num + 2 >= app.cfg.countries_max) {
+			if ((extra_num + 3) >= app.cfg.countries_max) {
 				$('div.country-add button').prop('disabled', true).addClass('disabled');
 			}
 			
@@ -156,7 +192,7 @@ var app = {
 				
 				$('div.countries-extra-list div.country-extra').each(function () {
 					
-					app.cfg.countries_selected[n] = $(this).attr('data-country');
+					app.cfg.countries_selected[n] = $(this).attr('data-country-name');
 					
 					n++;
 					
@@ -189,6 +225,7 @@ var app = {
 				
 				t = {
 					days: 0,
+					graph_start: '',
 					confirmed: [],
 					active: [],
 					deaths: [],
@@ -203,6 +240,10 @@ var app = {
 				for (var day in app.cfg.countries_data[app.cfg.countries_selected[p]].timeline) {
 					
 					if (count || app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].confirmed >= app.cfg.start) {
+						
+						if (t.graph_start == '') {
+							t.graph_start = day;
+						}
 						
 						t.confirmed.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].confirmed);
 						t.active.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].active);
@@ -223,9 +264,11 @@ var app = {
 					
 				}
 				
+				if (t.days > data.days) {
+					data.days = t.days;
+				}
+				
 			}
-			
-			data.days = Math.max(data.countries[0].days, data.countries[1].days);
 			
 			return data;
 			
@@ -235,10 +278,23 @@ var app = {
 			
 			var data = app.graphs.calculate();
 			
+			// Update graph_start info
+			
+			for (var p in data.countries) {
+				
+				if (data.countries[p].graph_start == '') {
+					$('[data-country="' + p + '"] .info-start span').html('None');
+				} else {
+					$('[data-country="' + p + '"] .info-start span').html(app.aux.dateFormat(data.countries[p].graph_start));
+				}
+				
+			}
+			
 			// Confirmed
 			app.graphs.draw({
 				type: 'line',
 				id: 'confirmed',
+				category: 'confirmed',
 				days: data.days,
 				data: data.countries,
 				title: 'Confimed',
@@ -248,6 +304,7 @@ var app = {
 			app.graphs.draw({
 				type: 'line',
 				id: 'active',
+				category: 'active',
 				days: data.days,
 				data: data.countries,
 				title: 'Active',
@@ -257,6 +314,7 @@ var app = {
 			app.graphs.draw({
 				type: 'line',
 				id: 'deaths',
+				category: 'deaths',
 				days: data.days,
 				data: data.countries,
 				title: 'Deaths',
@@ -266,6 +324,7 @@ var app = {
 			app.graphs.draw({
 				type: 'line',
 				id: 'recovered',
+				category: 'recovered',
 				days: data.days,
 				data: data.countries,
 				title: 'Recovered',
@@ -275,6 +334,7 @@ var app = {
 			app.graphs.draw({
 				type: 'bar',
 				id: 'confirmed_daily',
+				category: 'confirmed',
 				days: data.days,
 				data: data.countries,
 				title: 'Confimed (daily)',
@@ -284,6 +344,7 @@ var app = {
 			app.graphs.draw({
 				type: 'bar',
 				id: 'deaths_daily',
+				category: 'deaths',
 				days: data.days,
 				data: data.countries,
 				title: 'Deaths (daily)',
@@ -293,6 +354,7 @@ var app = {
 			app.graphs.draw({
 				type: 'bar',
 				id: 'recovered_daily',
+				category: 'recovered',
 				days: data.days,
 				data: data.countries,
 				title: 'Recovered (daily)',
@@ -303,8 +365,16 @@ var app = {
 		draw: function (options) {
 			
 			var xaxis = [];
+			var steps = Math.floor(options.days / app.cfg.xaxis_lapses[options.type]);
+			var count = 0;
 			for (var i=1; i<=options.days+1; i++) {
-				xaxis.push(i);
+				if (count == steps) {
+					xaxis.push(i);
+					count = 0;
+				} else {
+					xaxis.push('');
+					count++;
+				}
 			}
 			
 			var series = [];
@@ -360,7 +430,10 @@ var app = {
 				series: series,
 				chart: {
 					zoom: {
-						enabled: false
+						enabled: false,
+					},
+					toolbar: {
+						offsetX: 0,
 					}
 				},
 				colors: app.cfg.graph_palette,
@@ -374,8 +447,11 @@ var app = {
 					curve: 'straight'
 				},
 				title: {
-					text: options.title,
-					align: 'left'
+					text: options.title + ' *',
+					align: 'left',
+					style: {
+						color: app.cfg.info_palette[options.category],
+					}
 				},
 				grid: {
 					row: {
@@ -387,6 +463,9 @@ var app = {
 					categories: xaxis,
 					title: {
 						text: 'Days from ' + app.cfg.start + 'th confirmed',
+					},
+					labels: {
+						hideOverlappingLabels: true,
 					}
 				},
 				yaxis: {
@@ -400,6 +479,7 @@ var app = {
 			switch (options.type) {
 				
 				case 'line':
+					graph_options.chart.toolbar.offsetX = -23;
 					graph_options.chart.height = 350;
 					graph_options.chart.type = 'line';
 					if (app.cfg.graph_mode == 'logarithmic') {
@@ -418,11 +498,13 @@ var app = {
 					break;
 				
 				case 'bar':
+					graph_options.chart.toolbar.offsetX = 0;
 					graph_options.chart.height = 250;
 					graph_options.chart.type = 'bar';
 					graph_options.tooltip.shared = false;
 					graph_options.tooltip.followCursor = true;
 					graph_options.tooltip.intersect = false;
+					graph_options.yaxis.min = 0;
 					break;
 				
 			}
@@ -592,6 +674,13 @@ var app = {
 			}
 			
 			return s.join(dec)
+		},
+		
+		dateFormat: function (date) {
+			
+			var t = date.split('-');
+			return t[2] + '/' + t[1] + '/' + t[0];
+			
 		}
 		
 	},

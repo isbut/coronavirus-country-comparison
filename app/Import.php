@@ -19,19 +19,34 @@ class Import
 	public function execute()
 	{
 		
-		// Get file from yesterday
-		$filename = str_replace('[date]', date($this->config['data-source-file-date'], strtotime('yesterday')), $this->config['data-source-filename']);
+		$log = "--------------------\nIMPORT START: " . date('Y-m-d H:i:s') . "\n";
+		
+		// Initializing app info
+		$app_info = [];
+		
+		// Get file new file
+		$filename = str_replace('[date]', date($this->config['data-source-file-date'], $this->config['import-timestamp']), $this->config['data-source-filename']);
 		
 		// Load file from source
 		$file = file_get_contents($this->config['data-source-path'] . $filename);
 		if ($file === false) {
-			die('Could not load file "' . $this->config['data-source-path'] . $filename . '".');
+			
+			$log .= "Could not load remote file '" . $this->config['data-source-path'] . $filename . "'.\nIMPORT FINISHED: " . date('Y-m-d H:i:s') . "\n\n";
+			$this->writeLog($log);
+			die('Could not load remote file "' . $this->config['data-source-path'] . $filename . '".');
+			
 		}
+		
+		// Update app info last update
+		$app_info['last_update'] = date('d/m/Y', $this->config['import-timestamp']);
+		$app_info['import_date'] = date('Y-m-d H:i:s');
+		
+		$log .= "Remote file '" . $this->config['data-source-path'] . $filename . "' loaded.\n";
 		
 		// Save file
 		try {
 			
-			$destination_file = PUBLIC_PATH . $this->config['folders']['data-csv'] . '/' . $filename;
+			$destination_file = $this->config['paths']['data-csv'] . '/' . $filename;
 			
 			$fh = fopen($destination_file, 'w');
 			$fw = fwrite($fh, $file);
@@ -39,11 +54,17 @@ class Import
 			
 		} catch (Exception $e) {
 			
-			die('Could not save file "' . $filename . '": ' . $e->getMessage());
+			$log .= "Could not save local file '" . $this->config['paths']['data-csv'] . "/" . $filename . "'.\nIMPORT FINISHED: " . date('Y-m-d H:i:s') . "\n\n";
+			$this->writeLog($log);
+			die('Could not save local file "' . $this->config['paths']['data-csv'] . '/' . $filename . '": ' . $e->getMessage());
 			
 		}
 		
+		$log .= "Local file '" . $this->config['paths']['data-csv'] . "/" . $filename . "' saved.\n";
+		
 		// Parse imported file to get countries list
+		
+		$log .= "Parsing countries list...\n";
 		
 		// Countries data
 		$countries = [];
@@ -61,6 +82,11 @@ class Import
 						
 						if (!isset($countries[$country])
 							&& !in_array($country, $this->config['data-countries-disappeared'])) {
+							
+							if (!isset($this->config['countries'][$country])) {
+								// New country detected. Have to update population manually!
+								$log .= "New country detected: '" . $country . "'.\n";
+							}
 							
 							// Update countries list
 							$countries[$country] = [
@@ -91,11 +117,17 @@ class Import
 			
 		} catch (Exception $e) {
 			
+			$log .= "Could not parse local file '" . $this->config['paths']['data-csv'] . "/" . $filename . "'.\nIMPORT FINISHED: " . date('Y-m-d H:i:s') . "\n\n";
+			$this->writeLog($log);
 			die('Could not parse file "' . $filename . '": ' . $e->getMessage());
 			
 		}
 		
+		$log .= "Countries list parsed: " . $lines . " items.\n";
+		
 		// Parse data to get countries info
+		
+		$log .= "Parsing countries info...\n";
 		
 		// Initialize countries data array
 		
@@ -138,7 +170,7 @@ class Import
 			
 			$date_formatted = date('Y-m-d', $date);
 			$filename = str_replace('[date]', date($this->config['data-source-file-date'], $date), $this->config['data-source-filename']);
-			$file = PUBLIC_PATH . $this->config['folders']['data-csv'] . '/' . $filename;
+			$file = $this->config['paths']['data-csv'] . '/' . $filename;
 			
 			if (($handle = fopen($file, "r")) !== false) {
 				
@@ -177,7 +209,11 @@ class Import
 			
 		}
 		
+		$log .= "Countries info parsed: " . $lines . " items.\n";
+		
 		// Recalculations of data
+		
+		$log .= "Recalculating data...\n";
 		
 		foreach ($countries as $country => $data) {
 			
@@ -199,10 +235,15 @@ class Import
 			
 		}
 		
+		$log .= "Data recalculated.\n";
+		
 		// Write countries JSON file
+		
+		$log .= "Writing JSON files...\n";
+		
 		try {
 			
-			$destination_file = PUBLIC_PATH . $this->config['folders']['data-json'] . '/' . $this->config['files']['countries'];
+			$destination_file = $this->config['paths']['data-json'] . '/' . $this->config['files']['countries'];
 			
 			$fh = fopen($destination_file, 'w');
 			$fw = fwrite($fh, json_encode($countries, JSON_UNESCAPED_UNICODE));
@@ -210,12 +251,55 @@ class Import
 			
 		} catch (Exception $e) {
 			
-			die('Could not save file "' . $this->config['files']['countries'] . '": ' . $e->getMessage());
+			$log .= "Could not write JSON file '" . $this->config['paths']['data-json'] . "/" . $this->config['files']['countries'] . "'.\nIMPORT FINISHED: " . date('Y-m-d H:i:s') . "\n\n";
+			$this->writeLog($log);
+			die('Could not write JSON file "' . $this->config['paths']['data-json'] . '/' . $this->config['files']['countries'] . '": ' . $e->getMessage());
 			
 		}
 		
-		die('ok');
+		$log .= "File '" . $this->config['paths']['data-json'] . "/" . $this->config['files']['countries'] . "' saved.\n";
 		
+		// Write app_info JSON file
+		
+		try {
+			
+			$destination_file = $this->config['paths']['data-json'] . '/' . $this->config['files']['app-info'];
+			
+			$fh = fopen($destination_file, 'w');
+			$fw = fwrite($fh, json_encode($app_info, JSON_UNESCAPED_UNICODE));
+			$fc = fclose($fh);
+			
+		} catch (Exception $e) {
+			
+			$log .= "Could not write JSON file '" . $this->config['paths']['data-json'] . "/" . $this->config['files']['app-info'] . "'.\nIMPORT FINISHED: " . date('Y-m-d H:i:s') . "\n\n";
+			$this->writeLog($log);
+			die('Could not write JSON file "' . $this->config['paths']['data-json'] . '/' . $this->config['files']['app-info'] . '": ' . $e->getMessage());
+			
+		}
+		
+		$log .= "File '" . $this->config['paths']['data-json'] . "/" . $this->config['files']['app-info'] . "' saved.\n";
+		
+		// Import finished
+		
+		$log .= "IMPORT FINISHED: " . date('Y-m-d H:i:s') . "\n\n";
+		
+		// Write log
+		
+		$this->writeLog($log);
+		
+		die('<pre>' . $log);
+		
+	}
+	
+	public function writeLog($log)
+	{
+		
+		$destination_file = $this->config['paths']['logs'] . '/' . $this->config['files']['import-log'];
+		
+		$fh = fopen($destination_file, 'a');
+		$fw = fwrite($fh, $log);
+		$fc = fclose($fh);
+	
 	}
 	
 }

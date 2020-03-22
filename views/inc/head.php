@@ -2,14 +2,19 @@
 
 <div class="container">
 
-	<header>
-		<h1>Coronavirus COVID-19 Country Comparison</h1>
-		<div class="jumbotron">
-			Lorem ipsum dolor sit amet consectetur adipiscing elit, augue leo magna accumsan porta dictumst fermentum feugiat, proin id faucibus vitae viverra vivamus. Ligula eu porttitor pellentesque scelerisque dignissim hendrerit proin, in egestas natoque sollicitudin sagittis turpis neque rhoncus, nisl vitae ante cursus id velit. 
-		</div> 
-
-		<div class=" update">
-			<strong>Last update at <mark>mm/dd/yyyy</mark></strong>
+	<header class="row">
+		<h1 class="col-md-6">Coronavirus COVID-19 Country Comparison</h1>
+		<div class="wellcome col-md-6">
+			This website is intended to help to understand how the disease #COVID-19 spreads and also to provide a comparative vision of how different countries are facing this pandemic.
+		</div>
+		
+		<div class="wellcome2 col-md-12">
+			We would like to thank and pay tribute to each and everyone who is, despite the risk to their own health, fighting in the front line, especially to those in the law enforcement, supermarkets and groceries stores, cleaning services, banks, communications, couriers and all other services.<br />
+			We used to take everything for granted and we have just discovered how fragile our world is.
+		</div>
+		
+		<div class="col-md-12 update">
+			<strong>Last update: <mark></mark></strong>
 		</div>
 	</header>
 

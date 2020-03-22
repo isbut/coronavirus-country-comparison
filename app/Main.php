@@ -35,7 +35,7 @@ class Main
 	{
 		
 		// Load countries
-		$countries = json_decode(file_get_contents(PUBLIC_PATH . $this->config['folders']['data-json'] . '/' . $this->config['files']['countries']), true);
+		$countries = json_decode(file_get_contents($this->config['paths']['data-json'] . '/' . $this->config['files']['countries']), true);
 		
 		// Get inputs
 		$country1 = isset($_GET['c1']) ? sanitize($_GET['c1']) : $this->config['defaults']['country1'];

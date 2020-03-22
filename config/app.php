@@ -4,15 +4,25 @@
 
 return [
 	
-	// Folders
-	'folders' => [
-		'data-csv' => '/data/csv',
-		'data-json' => '/data/json',
+	// Paths
+	'paths' => [
+		'data-csv' => APP_PATH . '/data/csv',
+		'data-json' => APP_PATH . '/data/json',
+		'logs' => APP_PATH . '/logs',
 	],
+	
+	// App url
+	'url' => 'https://www.isbut.com/coronavirus/',
+	
+	// Import slug
+	// Change this to a secret string so novody can update remotely
+	'import-slug' => '003727009330c5a0a9328acd2bcf710a',
 	
 	// Files
 	'files' => [
 		'countries' => 'countries.json',
+		'app-info' => 'app-info.json',
+		'import-log' => 'import-log.txt',
 	],
 	
 	// Defaults
@@ -24,6 +34,10 @@ return [
 		'graph_mode' => 'linear',
 		'relative_num' => 100000,
 		'countries_max' => 6,
+		'xaxis_lapses' => [
+			'line' => 20,
+			'bar' => 40,
+		],
 		'graph_palette' => [
 			'#008FFB',
 			'#00E396',
@@ -31,6 +45,13 @@ return [
 			'#FF4560',
 			'#775DD0',
 			'#546E7A',
+		],
+		'info_palette' => [
+			'population' => '#000000',
+			'confirmed' => '#4c95ff',
+			'active' => '#ffa946',
+			'deaths' => '#f95d14',
+			'recovered' => '#58d26b',
 		],
 	],
 	
@@ -42,6 +63,8 @@ return [
 	],
 	
 	// Parsing origin data
+	// Date to search for
+	'import-timestamp' => strtotime('yesterday'),
 	// Path for CSV files
 	'data-source-path' => 'https://github.com/CSSEGISandData/COVID-19/raw/master/csse_covid_19_data/csse_covid_19_daily_reports/',
 	// Source filename pattern
@@ -123,7 +146,7 @@ return [
 			'population' => 83783942,
 		],
 		'Congo (Kinshasa)' => [
-			'population' => 5518087,
+			'population' => 11855000,
 		],
 		'Honduras' => [
 			'population' => 9904607,
@@ -433,8 +456,187 @@ return [
 		],
 		'Jamaica' => [
 			'population' => 2961167,
-		]
-	
+		], 
+		'Taiwan*' => [
+			'population' => 0,
+		],
+		'Uruguay' => [
+			'population' => 0,
+		],
+		'Venezuela' => [
+			'population' => 0,
+		],
+		'Uzbekistan' => [
+			'population' => 0,
+		],
+		'Liechtenstein' => [
+			'population' => 0,
+		],
+		'Afghanistan' => [
+			'population' => 0,
+		],
+		'Rwanda' => [
+			'population' => 0,
+		],
+		'Ghana' => [
+			'population' => 0,
+		],
+		'Montenegro' => [
+			'population' => 0,
+		],
+		'Guatemala' => [
+			'population' => 0,
+		],
+		'Mauritius' => [
+			'population' => 0,
+		],
+		'Monaco' => [
+			'population' => 0,
+		],
+		'Trinidad and Tobago' => [
+			'population' => 0,
+		],
+		'Guyana' => [
+			'population' => 0,
+		],
+		'Seychelles' => [
+			'population' => 0,
+		],
+		'Equatorial Guinea' => [
+			'population' => 0,
+		],
+		'Kyrgyzstan' => [
+			'population' => 0,
+		],
+		'Mayotte' => [
+			'population' => 0,
+		],
+		'Tanzania' => [
+			'population' => 0,
+		],
+		'Barbados' => [
+			'population' => 0,
+		],
+		'Suriname' => [
+			'population' => 0,
+		],
+		'Bahamas, The' => [
+			'population' => 0,
+		],
+		'Central African Republic' => [
+			'population' => 0,
+		],
+		'Congo (Brazzaville)' => [
+			'population' => 	1827000,
+		],
+		'Gabon' => [
+			'population' => 2225734,
+		],
+		'Madagascar' => [
+			'population' => 27691018,
+		],
+		'Namibia' => [
+			'population' => 2540905,
+		],
+		'Benin' => [
+			'population' => 12123200,
+		],
+		'Haiti' => [
+			'population' => 11402528,
+		],
+		'Kosovo' => [
+			'population' => 1739825,
+		],
+		'Liberia' => [
+			'population' => 5057681,
+		],
+		'Mauritania' => [
+			'population' => 4649658,
+		],
+		'Saint Lucia' => [
+			'population' => 183627,
+		],
+		'Zambia' => [
+			'population' => 18383955,
+		],
+		'Angola' => [
+			'population' => 32866272,
+		],
+		'Cabo Verde' => [
+			'population' => 555987,
+		],
+		'Chad' => [
+			'population' => 16425864,
+		],
+		'Djibouti' => [
+			'population' => 988000,
+		],
+		'El Salvador' => [
+			'population' => 6486205,
+		],
+		'Eswatini' => [
+			'population' => 1160164,
+		],
+		'Fiji' => [
+			'population' => 896445,
+		],
+		'Gambia, The' => [
+			'population' => 2416668,
+		],
+		'Nicaragua' => [
+			'population' => 6624554,
+		],
+		'Niger' => [
+			'population' => 24206644,
+		],
+		'Papua New Guinea' => [
+			'population' => 8947024,
+		],
+		'Saint Vincent and the Grenadines' => [
+			'population' => 110940,
+		],
+		'Somalia' => [
+			'population' => 15893222,
+		],
+		'Zimbabwe' => [
+			'population' => 14862924,
+		],
+		'Greenland' => [
+			'population' => 56770,
+		],
+		'Guam' => [
+			'population' => 168775,
+		],
+		'Guernsey' => [
+			'population' => 65345,
+		],
+		'Jersey' => [
+			'population' => 105500,
+		],
+		'Puerto Rico' => [
+			'population' => 2860853,
+		],
+		'Republic of the Congo' => [
+			'population' => 89561403,
+		],
+		'The Bahamas' => [
+			'population' => 393244,
+		],
+		'The Gambia' => [
+			'population' => 2416668,
+		],
+		'Cape Verde' => [
+			'population' => 555987,
+		],
+		'East Timor' => [
+			'population' => 1318445,
+		],
+		'Eritrea' => [
+			'population' => 3546421,
+		],
+		'Uganda' => [
+			'population' => 45741007,
+		],
 	],
 
 ];
