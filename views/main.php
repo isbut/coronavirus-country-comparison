@@ -5,6 +5,7 @@
 
 			<div class="col-6 text-center">
 				<div data-country="0" class="country-info country1-info text-center">
+					<div class="legend">Select country to compare:</div>
 					<div class="select-wrapper">
 						<select name="c1" class="custom-select">
 							<?php
@@ -27,6 +28,7 @@
 			
 			<div class="col-6 text-center">
 				<div data-country="1" class="country-info country2-info text-center">
+					<div class="legend">Select country to compare:</div>
 					<div class="select-wrapper">
 						<select name="c2" class="custom-select">
 							<?php
