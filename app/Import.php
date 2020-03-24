@@ -69,6 +69,20 @@ class Import
 		// Countries data
 		$countries = [];
 		$lines = 0;
+		$data_columns = $this->columnsFormatGet(date('Y-m-d'), $this->config['import-timestamp']);
+		
+		// Load countries population
+		try {
+			
+			$countries_population = json_decode(file_get_contents($this->config['paths']['data-json'] . '/' . $this->config['files']['population']), true);
+			
+		} catch (Exception $e) {
+			
+			$log .= "Could not load local file '" . $this->config['paths']['data-json'] . "/" . $this->config['files']['population'] . "'.\nIMPORT FINISHED: " . date('Y-m-d H:i:s') . "\n\n";
+			$this->writeLog($log);
+			die('Could not load local file "' . $this->config['paths']['data-json'] . '/' . $this->config['files']['population'] . '": ' . $e->getMessage());
+			
+		}
 		
 		try {
 			
@@ -78,14 +92,14 @@ class Import
 					
 					if ($lines > 0) {
 						
-						$country = trim($data[$this->config['data-columns']['country']]);
+						$country = trim($data[$data_columns['country']]);
 						
 						if (!in_array($country, $this->config['data-countries-disappeared'])) {
 							
 							if (!isset($countries[$country])) {
 								// New country
 								
-								if (!isset($this->config['countries'][$country])) {
+								if (!isset($countries_population[$country])) {
 									// New country detected. Have to update population manually!
 									$log .= "New country detected: '" . $country . "'.\n";
 								}
@@ -93,22 +107,22 @@ class Import
 								// Update countries list
 								$countries[$country] = [
 									'normalized' => normalize($country),
-									'population' => isset($this->config['countries'][$country]) ? $this->config['countries'][$country]['population'] : 0,
-									'confirmed' => intval(trim($data[$this->config['data-columns']['confirmed']])),
-									'active' => intval(trim($data[$this->config['data-columns']['confirmed']])) - intval(trim($data[$this->config['data-columns']['deaths']])) - intval(trim($data[$this->config['data-columns']['recovered']])),
-									'deaths' => intval(trim($data[$this->config['data-columns']['deaths']])),
-									'recovered' => intval(trim($data[$this->config['data-columns']['recovered']])),
-									'lat' => floatval(trim($data[$this->config['data-columns']['lat']])),
-									'lng' => floatval(trim($data[$this->config['data-columns']['lng']])),
+									'population' => isset($countries_population[$country]) ? $countries_population[$country]['population'] : 0,
+									'confirmed' => intval(trim($data[$data_columns['confirmed']])),
+									'active' => intval(trim($data[$data_columns['confirmed']])) - intval(trim($data[$data_columns['deaths']])) - intval(trim($data[$data_columns['recovered']])),
+									'deaths' => intval(trim($data[$data_columns['deaths']])),
+									'recovered' => intval(trim($data[$data_columns['recovered']])),
+									'lat' => floatval(trim($data[$data_columns['lat']])),
+									'lng' => floatval(trim($data[$data_columns['lng']])),
 								];
 								
 							} else {
 								// Existing country (province)
 								
-								$countries[$country]['confirmed'] += intval(trim($data[$this->config['data-columns']['confirmed']]));
-								$countries[$country]['active'] += (intval(trim($data[$this->config['data-columns']['confirmed']])) - intval(trim($data[$this->config['data-columns']['deaths']])) - intval(trim($data[$this->config['data-columns']['recovered']])));
-								$countries[$country]['deaths'] += intval(trim($data[$this->config['data-columns']['deaths']]));
-								$countries[$country]['recovered'] += intval(trim($data[$this->config['data-columns']['recovered']]));
+								$countries[$country]['confirmed'] += intval(trim($data[$data_columns['confirmed']]));
+								$countries[$country]['active'] += (intval(trim($data[$data_columns['confirmed']])) - intval(trim($data[$data_columns['deaths']])) - intval(trim($data[$data_columns['recovered']])));
+								$countries[$country]['deaths'] += intval(trim($data[$data_columns['deaths']]));
+								$countries[$country]['recovered'] += intval(trim($data[$data_columns['recovered']]));
 								
 							}
 							
@@ -183,6 +197,7 @@ class Import
 			$date_formatted = date('Y-m-d', $date);
 			$filename = str_replace('[date]', date($this->config['data-source-file-date'], $date), $this->config['data-source-filename']);
 			$file = $this->config['paths']['data-csv'] . '/' . $filename;
+			$data_columns = $this->columnsFormatGet($date_formatted);
 			
 			if (($handle = fopen($file, "r")) !== false) {
 				
@@ -191,7 +206,7 @@ class Import
 					if ($lines > 0) {
 						
 						// Update country data
-						$country = trim($data[$this->config['data-columns']['country']]);
+						$country = trim($data[$data_columns['country']]);
 						
 						if (isset($this->config['data-countries-changed'][$country])) {
 							// Some country names have changed
@@ -200,10 +215,10 @@ class Import
 						
 						if (isset($countries[$country])) {
 							
-							$countries[$country]['timeline'][$date_formatted]['confirmed'] += trim($data[$this->config['data-columns']['confirmed']]);
-							$countries[$country]['timeline'][$date_formatted]['active'] += (trim($data[$this->config['data-columns']['confirmed']]) - trim($data[$this->config['data-columns']['deaths']]) - trim($data[$this->config['data-columns']['recovered']]));
-							$countries[$country]['timeline'][$date_formatted]['deaths'] += trim($data[$this->config['data-columns']['deaths']]);
-							$countries[$country]['timeline'][$date_formatted]['recovered'] += trim($data[$this->config['data-columns']['recovered']]);
+							$countries[$country]['timeline'][$date_formatted]['confirmed'] += trim($data[$data_columns['confirmed']]);
+							$countries[$country]['timeline'][$date_formatted]['active'] += (trim($data[$data_columns['confirmed']]) - trim($data[$data_columns['deaths']]) - trim($data[$data_columns['recovered']]));
+							$countries[$country]['timeline'][$date_formatted]['deaths'] += trim($data[$data_columns['deaths']]);
+							$countries[$country]['timeline'][$date_formatted]['recovered'] += trim($data[$data_columns['recovered']]);
 							
 						}
 						
@@ -300,6 +315,24 @@ class Import
 		$this->writeLog($log);
 		
 		die('<pre>' . $log);
+		
+	}
+	
+	// Returns the CSV columns format based on date
+	public function columnsFormatGet($date)
+	{
+		
+		$columns = [];
+		
+		foreach ($this->config['data-columns'] as $d => $c) {
+			
+			if ($date >= $d) {
+				$columns = $c;
+			}
+			
+		}
+		
+		return $columns;
 		
 	}
 	

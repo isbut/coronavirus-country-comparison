@@ -13,7 +13,7 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="Coronavirus COVID-19 Country Comparison - isbut.com" />
 	<meta property="og:description" content="This website is intended to help to understand how the disease #COVID-19 spreads and also to provide a comparative vision of how different countries are facing this pandemic." />
-	<meta property="og:image" content="<?= $this->config['url'] ?>images/fb-share.png" />
+	<meta property="og:image" content="<?= $this->config['url'] ?>images/fb-share.jpg" />
 	
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,700" rel="stylesheet">  

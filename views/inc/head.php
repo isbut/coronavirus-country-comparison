@@ -9,7 +9,7 @@
 		</div>
 		
 		<div class="wellcome2 col-md-12">
-			We would like to thank and pay tribute to each and everyone who is, despite the risk to their own health, fighting in the front line, especially to those in the law enforcement, supermarkets and groceries stores, cleaning services, banks, communications, couriers and all other services.<br />
+			We would like to thank and pay tribute to each and everyone who is, despite the risk to their own health, fighting in the front line, especially to those in the healthcare sector, law enforcement, supermarkets and groceries stores, cleaning services, banks, communications, couriers and all other services.<br />
 			We used to take everything for granted and we have just discovered how fragile our world is.
 		</div>
 		
