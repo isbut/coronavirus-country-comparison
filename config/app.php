@@ -35,10 +35,7 @@ return [
 		'graph_mode' => 'linear',
 		'relative_num' => 100000,
 		'countries_max' => 6,
-		'xaxis_lapses' => [
-			'line' => 20,
-			'bar' => 40,
-		],
+		'xaxis_lapse' => 20,
 		'graph_palette' => [
 			'#008FFB',
 			'#00E396',
@@ -64,6 +61,8 @@ return [
 	],
 	
 	// Parsing origin data
+	// Time of update
+	'update-time' => '02:00 CET',
 	// Date to search for
 	'import-timestamp' => strtotime('yesterday'),
 	// Path for CSV files

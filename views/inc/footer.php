@@ -36,7 +36,7 @@
 	app.cfg.countries_max = <?= $this->config['defaults']['countries_max'] ?>;
 	app.cfg.graph_palette = <?= json_encode($this->config['defaults']['graph_palette']) ?>;
 	app.cfg.info_palette = <?= json_encode($this->config['defaults']['info_palette']) ?>;
-	app.cfg.xaxis_lapses = <?= json_encode($this->config['defaults']['xaxis_lapses']) ?>;
+	app.cfg.xaxis_lapse = <?= $this->config['defaults']['xaxis_lapse'] ?>;
 	app.cfg.app_info = <?php include $this->config['paths']['data-json'] . '/' . $this->config['files']['app-info']; ?>;
 </script>
 

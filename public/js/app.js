@@ -20,6 +20,7 @@ var app = {
 			recovered: null,
 		},
 		ranking_table: null,
+		xaxis_labels: [],
 		
 	},
 	
@@ -290,6 +291,19 @@ var app = {
 				
 			}
 			
+			app.cfg.xaxis_labels = [];
+			var steps = Math.floor(data.days / app.cfg.xaxis_lapse);
+			var count = 0;
+			for (var i=1; i<=data.days+1; i++) {
+				if (count == steps) {
+					app.cfg.xaxis_labels.push(i);
+					count = 0;
+				} else {
+					app.cfg.xaxis_labels.push('');
+					count++;
+				}
+			}
+			
 			// Confirmed
 			app.graphs.draw({
 				type: 'line',
@@ -365,16 +379,8 @@ var app = {
 		draw: function (options) {
 			
 			var xaxis = [];
-			var steps = Math.floor(options.days / app.cfg.xaxis_lapses[options.type]);
-			var count = 0;
 			for (var i=1; i<=options.days+1; i++) {
-				if (count == steps) {
-					xaxis.push(i);
-					count = 0;
-				} else {
-					xaxis.push('');
-					count++;
-				}
+				xaxis.push(i);
 			}
 			
 			var series = [];
@@ -407,7 +413,6 @@ var app = {
 							series[i].data.push((options.data[i][options.id][d] / app.cfg.countries_data[app.cfg.countries_selected[i]].population) * 100);
 						}
 					}
-					console.log(series);
 					
 				} else {
 					// Cases por x population
@@ -439,6 +444,11 @@ var app = {
 				colors: app.cfg.graph_palette,
 				tooltip: {
 					shared: true,
+					x: {
+						formatter: function (value) {
+							return 'Day ' + value;
+						}
+					}
 				},
 				dataLabels: {
 					enabled: false
@@ -465,7 +475,10 @@ var app = {
 						text: 'Days from ' + app.cfg.start + 'th confirmed',
 					},
 					labels: {
-						hideOverlappingLabels: true,
+						hideOverlappingLabels: false,
+						formatter: function (value, timestamp, index) {
+							return app.cfg.xaxis_labels[parseInt(value) - 1];
+						}
 					}
 				},
 				yaxis: {
