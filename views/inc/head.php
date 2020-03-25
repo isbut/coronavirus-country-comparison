@@ -14,7 +14,7 @@
 		</div>
 		
 		<div class="col-md-12 update">
-			<strong>Last update: <mark></mark></strong>
+			<strong>Last data available: <mark></mark></strong> <span>Updated daily at <?= $this->config['update-time'] ?></span>
 		</div>
 	</header>
 
