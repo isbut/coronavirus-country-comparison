@@ -13,7 +13,10 @@ class Main
 	{
 		
 		// Load config
-		$this->config = require __DIR__ . '/../config/app.php';
+		$this->config = array_merge(
+			require __DIR__ . '/../config/app.php',
+			require __DIR__ . '/../config/env.php'
+		);
 		
 	}
 	
