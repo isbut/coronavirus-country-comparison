@@ -21,6 +21,7 @@ var app = {
 		},
 		ranking_table: null,
 		xaxis_labels: [],
+		cookie: {},
 		
 	},
 	
@@ -128,6 +129,8 @@ var app = {
 			
 			app.cfg.countries_selected[num] = country;
 			
+			app.country.setCookie();
+			
 			if (!init) {
 				app.graphs.refresh();
 			}
@@ -205,6 +208,19 @@ var app = {
 				
 			});
 		
+		},
+		
+		setCookie: function () {
+			
+			var expires = '';
+			var date = new Date();
+			date.setTime(date.getTime() + (app.cfg.cookie.life * 24 * 60 * 60 * 1000));
+			expires = "; expires=" + date.toGMTString();
+			
+			var value = $('div[data-country="0"] select').val() + ',' + $('div[data-country="1"] select').val();
+			
+			document.cookie = app.cfg.cookie.name + "=" + value + expires + "; path=/";
+			
 		}
 		
 	},
@@ -704,7 +720,7 @@ var app = {
 			var t = date.split('-');
 			return t[2] + '/' + t[1] + '/' + t[0];
 			
-		}
+		},
 		
 	},
 	

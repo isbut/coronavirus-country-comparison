@@ -36,6 +36,10 @@ return [
 		'relative_num' => 100000,
 		'countries_max' => 6,
 		'xaxis_lapse' => 20,
+		'cookie' => [
+			'life' => 30,
+			'name' => 'isbutccc',
+		],
 		'graph_palette' => [
 			'#008FFB',
 			'#00E396',
