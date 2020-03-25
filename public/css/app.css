@@ -259,6 +259,10 @@ h1 {
 	font-size: 13px;
 	margin-bottom: 10px;
 }
+.update span {
+	color: #999999;
+	font-size: 11px;
+}
 
 @media (max-width: 767px) {
 	h1 {

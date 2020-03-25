@@ -43,6 +43,13 @@ class Main
 		$mode = isset($_GET['m']) ? sanitize($_GET['m']) : $this->config['defaults']['mode'];
 		$start = isset($_GET['s']) ? sanitize($_GET['s']) : $this->config['defaults']['start'];
 		$graph_mode = isset($_GET['gm']) ? sanitize($_GET['gm']) : $this->config['defaults']['graph_mode'];
+		// Load cookie info
+		if (isset($_COOKIE[$this->config['defaults']['cookie']['name']])
+			&& substr_count($_COOKIE[$this->config['defaults']['cookie']['name']], ',') == 1) {
+			$t = explode(',', $_COOKIE[$this->config['defaults']['cookie']['name']]);
+			$country1 = sanitize($t[0]);
+			$country2 = sanitize($t[1]);
+		}
 		
 		// Check inputs
 		if (!isset($countries[$country1])) {
