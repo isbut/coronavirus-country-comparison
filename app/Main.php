@@ -48,8 +48,8 @@ class Main
 		$graph_mode = isset($_GET['gm']) ? sanitize($_GET['gm']) : $this->config['defaults']['graph_mode'];
 		// Load cookie info
 		if (isset($_COOKIE[$this->config['defaults']['cookie']['name']])
-			&& substr_count($_COOKIE[$this->config['defaults']['cookie']['name']], ',') == 1) {
-			$t = explode(',', $_COOKIE[$this->config['defaults']['cookie']['name']]);
+			&& substr_count($_COOKIE[$this->config['defaults']['cookie']['name']], '|') == 1) {
+			$t = explode('|', $_COOKIE[$this->config['defaults']['cookie']['name']]);
 			$country1 = sanitize($t[0]);
 			$country2 = sanitize($t[1]);
 		}

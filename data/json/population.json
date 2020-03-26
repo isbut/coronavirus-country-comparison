@@ -568,5 +568,17 @@
 	},
 	"Libya": {
 		"population": 6871292
+	},
+	"Diamond Princess": {
+		"population": 3700
+	},
+	"Guinea-Bissau": {
+		"population": 1968001
+	},
+	"Mali": {
+		"population": 20250833
+	},
+	"Saint Kitts and Nevis": {
+		"population": 53199
 	}
 }
