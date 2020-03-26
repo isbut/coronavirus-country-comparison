@@ -217,7 +217,7 @@ var app = {
 			date.setTime(date.getTime() + (app.cfg.cookie.life * 24 * 60 * 60 * 1000));
 			expires = "; expires=" + date.toGMTString();
 			
-			var value = $('div[data-country="0"] select').val() + ',' + $('div[data-country="1"] select').val();
+			var value = $('div[data-country="0"] select').val() + '|' + $('div[data-country="1"] select').val();
 			
 			document.cookie = app.cfg.cookie.name + "=" + value + expires + "; path=/";
 			
