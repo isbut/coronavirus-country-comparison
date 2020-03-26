@@ -103,6 +103,8 @@ return [
 		'Macau' => 'China',
 		'Bahamas, The' => 'Bahamas',
 		'East Timor' => 'Timor-Leste',
+		'South Korea' => 'Korea, South',
+		'Republic of Korea' => 'Korea, South',
 	],
 	// Countries that have dissapeared
 	'data-countries-disappeared' => [
