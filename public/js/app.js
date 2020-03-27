@@ -403,18 +403,48 @@ var app = {
 				title: 'Recovered (daily)',
 			});
 			
+			// Confirmed Increment
+			app.graphs.draw({
+				type: 'area',
+				id: 'confirmed_increment',
+				category: 'confirmed',
+				days: app.cfg.graph_data.days,
+				data: app.cfg.graph_data.countries,
+				title: 'Confirmed (daily)',
+			});
+			
+			// Deaths Increment
+			app.graphs.draw({
+				type: 'area',
+				id: 'deaths_increment',
+				category: 'deaths',
+				days: app.cfg.graph_data.days,
+				data: app.cfg.graph_data.countries,
+				title: 'Deaths (daily)',
+			});
+			
+			// Recovered Increment
+			app.graphs.draw({
+				type: 'area',
+				id: 'recovered_increment',
+				category: 'recovered',
+				days: app.cfg.graph_data.days,
+				data: app.cfg.graph_data.countries,
+				title: 'Recovered (daily)',
+			});
+			
 		},
 		
 		draw: function (options) {
 			
 			var xaxis = [];
-			for (var i=1; i<=options.days+1; i++) {
+			for (var i = 1; i <= options.days + 1; i++) {
 				xaxis.push(i);
 			}
 			
 			var series = [];
 			
-			if (app.cfg.mode == 'absolute') {
+			if (app.cfg.mode == 'absolute' || options.type == 'area') {
 				// Absolute
 				
 				for (var i in options.data) {
@@ -477,17 +507,8 @@ var app = {
 				tooltip: {
 					shared: true,
 					x: {
-						formatter: function (value) {
-							return 'Day ' + value;
-						}
-					},
-					y: {
 						formatter: function (value, config) {
-							var country = config.w.config.series[config.seriesIndex].name;
-							var category = config.w.config.series[config.seriesIndex].category;
-							var data_serie = app.cfg.graph_data.countries[config.seriesIndex][category + '_increment'];
-							var increment = data_serie[config.dataPointIndex];
-							return app.aux.numberFormat(value) + ' <span style="font-weight: normal;">(' + (increment >= 0 ? '+' : '-') + app.aux.numberFormat(increment, 1) + '%)</span>';
+							return 'Day ' + value + ' <small>(' + app.cfg.graph_data.countries[config.seriesIndex].days_list[[config.dataPointIndex]] + ')</small>';
 						}
 					},
 				},
@@ -520,6 +541,9 @@ var app = {
 						formatter: function (value, timestamp, index) {
 							return app.cfg.xaxis_labels[parseInt(value) - 1];
 						}
+					},
+					tooltip: {
+						enabled: false,
 					}
 				},
 				yaxis: {
@@ -543,12 +567,27 @@ var app = {
 						}
 						graph_options.yaxis.logarithmic = true;
 						graph_options.yaxis.min = Math.min.apply(null, t) + 1;
-						graph_options.yaxis.max = function(max) { return max * 1.2; };
+						graph_options.yaxis.max = function (max) {
+							return max * 1.2;
+						};
 					} else {
 						graph_options.yaxis.logarithmic = false;
 						graph_options.yaxis.min = 0;
-						graph_options.yaxis.max = function(max) { return max; };
+						graph_options.yaxis.max = function (max) {
+							return max;
+						};
 					}
+					graph_options.tooltip.y = {
+						formatter: function (value, config) {
+							if (typeof value == 'undefined') return value;
+							var country = config.w.config.series[config.seriesIndex].name;
+							var category = config.w.config.series[config.seriesIndex].category;
+							var data_serie = app.cfg.graph_data.countries[config.seriesIndex][category + '_increment'];
+							var increment = data_serie[config.dataPointIndex];
+							return app.aux.numberFormat(value)
+								+ ' <span style="font-weight: normal;">(' + (increment >= 0 ? '+' : '-') + app.aux.numberFormat(increment, 1) + '%)</span>';
+						}
+					};
 					if (app.cfg.mode == 'absolute') {
 						graph_options.yaxis.title.text = 'Number of cases';
 					} else {
@@ -564,6 +603,16 @@ var app = {
 					graph_options.tooltip.followCursor = true;
 					graph_options.tooltip.intersect = false;
 					graph_options.yaxis.min = 0;
+					graph_options.tooltip.y = {
+						formatter: function (value, config) {
+							if (typeof value == 'undefined') return value;
+							var country = config.w.config.series[config.seriesIndex].name;
+							var category = config.w.config.series[config.seriesIndex].category;
+							var data_serie = app.cfg.graph_data.countries[config.seriesIndex][category + '_increment'];
+							var increment = data_serie[config.dataPointIndex];
+							return app.aux.numberFormat(value) + ' <span style="font-weight: normal;">(' + (increment >= 0 ? '+' : '-') + app.aux.numberFormat(increment, 1) + '%)</span>';
+						}
+					};
 					if (app.cfg.mode == 'absolute') {
 						graph_options.yaxis.title.text = 'Number of cases';
 					} else {
@@ -571,17 +620,33 @@ var app = {
 					}
 					break;
 				
+				case 'area':
+					graph_options.chart.toolbar.offsetX = 0;
+					graph_options.chart.height = 250;
+					graph_options.chart.type = 'area';
+					graph_options.yaxis.logarithmic = false;
+					graph_options.yaxis.min = 0;
+					graph_options.yaxis.max = function (max) {
+						return max;
+					};
+					graph_options.tooltip.y = {
+						formatter: function (value, config) {
+							if (typeof value == 'undefined') return value;
+							return (value >= 0 ? '+' : '-') + app.aux.numberFormat(value, 1) + '%';
+						}
+					};
+					graph_options.yaxis.title.text = 'Daily increment';
+					break;
+				
 			}
 			
-			switch (app.cfg.mode) {
+			if (app.cfg.mode == 'absolute' || options.type == 'area') {
 				
-				case 'absolute':
-					graph_options.yaxis.decimalsInFloat = 0;
-					break;
-				
-				case 'relative':
-					graph_options.yaxis.decimalsInFloat = 4;
-					break;
+				graph_options.yaxis.decimalsInFloat = 0;
+			
+			} else {
+			
+				graph_options.yaxis.decimalsInFloat = 4;
 				
 			}
 			

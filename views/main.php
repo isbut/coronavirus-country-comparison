@@ -104,7 +104,9 @@
 				<i class="fas fa-question-circle" title="Logarithmic Scale. A scale of measurement where the position is marked using the logarithm of a value instead of the actual value." data-toggle="tooltip" data-placement="bottom"></i>
 			</div>
 		</div>
-
+		
+		<h3>Acummulative cases</h3>
+		
 		<div class="row">
 		
 			<div class="graph-container col-md-6">
@@ -168,6 +170,8 @@
 			
 		</div>
 		
+		<h3>Daily cases</h3>
+		
 		<div class="row">
 			
 			<div class="col-md-12">
@@ -200,6 +204,42 @@
 				
 			</div>
 			
+		</div>
+		
+		<h3>Daily increments</h3>
+		
+		<div class="row">
+			
+			<div class="col-md-12">
+				
+				<div class="card position-relative">
+					<div class="card-body">
+						<div id="graph-confirmed_increment" class="graph"></div>
+					</div>
+				</div>
+			
+			</div>
+			
+			<div class="col-md-12">
+				
+				<div class="card position-relative">
+					<div class="card-body">
+						<div id="graph-deaths_increment" class="graph"></div>
+					</div>
+				</div>
+			
+			</div>
+			
+			<div class="col-md-12">
+				
+				<div class="card position-relative">
+					<div class="card-body">
+						<div id="graph-recovered_increment" class="graph"></div>
+					</div>
+				</div>
+			
+			</div>
+		
 		</div>
 		
 		<div class="disclaimer">
