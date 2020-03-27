@@ -176,8 +176,13 @@ class Import
 				'deaths' => 0,
 				'recovered' => 0,
 				'confirmed_daily' => 0,
+				'active_daily' => 0,
 				'deaths_daily' => 0,
 				'recovered_daily' => 0,
+				'confirmed_increment' => 0,
+				'active_increment' => 0,
+				'deaths_increment' => 0,
+				'recovered_increment' => 0,
 			];
 			
 			$date += (24 * 60 * 60);
@@ -248,16 +253,26 @@ class Import
 		foreach ($countries as $country => $data) {
 			
 			$last_confirmed = 0;
+			$last_active = 0;
 			$last_deaths = 0;
 			$last_recovered = 0;
 			
 			foreach ($data['timeline'] as $date => $d) {
 				
+				// Daily amount
 				$countries[$country]['timeline'][$date]['confirmed_daily'] = intval($countries[$country]['timeline'][$date]['confirmed']) - $last_confirmed;
+				$countries[$country]['timeline'][$date]['active_daily'] = intval($countries[$country]['timeline'][$date]['active']) - $last_active;
 				$countries[$country]['timeline'][$date]['deaths_daily'] = intval($countries[$country]['timeline'][$date]['deaths']) - $last_deaths;
 				$countries[$country]['timeline'][$date]['recovered_daily'] = intval($countries[$country]['timeline'][$date]['recovered']) - $last_recovered;
 				
+				// Daily increment
+				$countries[$country]['timeline'][$date]['confirmed_increment'] = $last_confirmed > 0 ? ((intval($countries[$country]['timeline'][$date]['confirmed']) - $last_confirmed) / $last_confirmed) * 100 : 0;
+				$countries[$country]['timeline'][$date]['active_increment'] = $last_active > 0 ? ((intval($countries[$country]['timeline'][$date]['active']) - $last_active) / $last_active) * 100 : 0;
+				$countries[$country]['timeline'][$date]['deaths_increment'] = $last_deaths > 0 ? ((intval($countries[$country]['timeline'][$date]['deaths']) - $last_deaths) / $last_deaths) * 100 : 0;
+				$countries[$country]['timeline'][$date]['recovered_increment'] = $last_recovered > 0 ? ((intval($countries[$country]['timeline'][$date]['recovered']) - $last_recovered) / $last_recovered) * 100 : 0;
+				
 				$last_confirmed = intval($countries[$country]['timeline'][$date]['confirmed']);
+				$last_active = intval($countries[$country]['timeline'][$date]['active']);
 				$last_deaths = intval($countries[$country]['timeline'][$date]['deaths']);
 				$last_recovered = intval($countries[$country]['timeline'][$date]['recovered']);
 				

@@ -22,6 +22,7 @@ var app = {
 		ranking_table: null,
 		xaxis_labels: [],
 		cookie: {},
+		graph_data: {},
 		
 	},
 	
@@ -243,13 +244,19 @@ var app = {
 				t = {
 					days: 0,
 					graph_start: '',
+					days_list: [],
 					confirmed: [],
 					active: [],
 					deaths: [],
 					recovered: [],
 					confirmed_daily: [],
+					active_daily: [],
 					deaths_daily: [],
 					recovered_daily: [],
+					confirmed_increment: [],
+					active_increment: [],
+					deaths_increment: [],
+					recovered_increment: [],
 				};
 				days = 0;
 				count = false;
@@ -262,13 +269,19 @@ var app = {
 							t.graph_start = day;
 						}
 						
+						t.days_list.push(app.aux.dateFormat(day));
 						t.confirmed.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].confirmed);
 						t.active.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].active);
 						t.deaths.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].deaths);
 						t.recovered.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].recovered);
 						t.confirmed_daily.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].confirmed_daily);
+						t.active_daily.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].active_daily);
 						t.deaths_daily.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].deaths_daily);
 						t.recovered_daily.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].recovered_daily);
+						t.confirmed_increment.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].confirmed_increment);
+						t.active_increment.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].active_increment);
+						t.deaths_increment.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].deaths_increment);
+						t.recovered_increment.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].recovered_increment);
 						
 						days++;
 						count = true;
@@ -293,24 +306,24 @@ var app = {
 		
 		refresh: function () {
 			
-			var data = app.graphs.calculate();
+			app.cfg.graph_data = app.graphs.calculate();
 			
 			// Update graph_start info
 			
-			for (var p in data.countries) {
+			for (var p in app.cfg.graph_data.countries) {
 				
-				if (data.countries[p].graph_start == '') {
+				if (app.cfg.graph_data.countries[p].graph_start == '') {
 					$('[data-country="' + p + '"] .info-start span').html('None');
 				} else {
-					$('[data-country="' + p + '"] .info-start span').html(app.aux.dateFormat(data.countries[p].graph_start));
+					$('[data-country="' + p + '"] .info-start span').html(app.aux.dateFormat(app.cfg.graph_data.countries[p].graph_start));
 				}
 				
 			}
 			
 			app.cfg.xaxis_labels = [];
-			var steps = Math.floor(data.days / app.cfg.xaxis_lapse);
+			var steps = Math.floor(app.cfg.graph_data.days / app.cfg.xaxis_lapse);
 			var count = 0;
-			for (var i=1; i<=data.days+1; i++) {
+			for (var i=1; i<=app.cfg.graph_data.days+1; i++) {
 				if (count == steps) {
 					app.cfg.xaxis_labels.push(i);
 					count = 0;
@@ -325,9 +338,9 @@ var app = {
 				type: 'line',
 				id: 'confirmed',
 				category: 'confirmed',
-				days: data.days,
-				data: data.countries,
-				title: 'Confimed',
+				days: app.cfg.graph_data.days,
+				data: app.cfg.graph_data.countries,
+				title: 'Confirmed',
 			});
 			
 			// Active
@@ -335,8 +348,8 @@ var app = {
 				type: 'line',
 				id: 'active',
 				category: 'active',
-				days: data.days,
-				data: data.countries,
+				days: app.cfg.graph_data.days,
+				data: app.cfg.graph_data.countries,
 				title: 'Active',
 			});
 			
@@ -345,8 +358,8 @@ var app = {
 				type: 'line',
 				id: 'deaths',
 				category: 'deaths',
-				days: data.days,
-				data: data.countries,
+				days: app.cfg.graph_data.days,
+				data: app.cfg.graph_data.countries,
 				title: 'Deaths',
 			});
 			
@@ -355,8 +368,8 @@ var app = {
 				type: 'line',
 				id: 'recovered',
 				category: 'recovered',
-				days: data.days,
-				data: data.countries,
+				days: app.cfg.graph_data.days,
+				data: app.cfg.graph_data.countries,
 				title: 'Recovered',
 			});
 			
@@ -365,9 +378,9 @@ var app = {
 				type: 'bar',
 				id: 'confirmed_daily',
 				category: 'confirmed',
-				days: data.days,
-				data: data.countries,
-				title: 'Confimed (daily)',
+				days: app.cfg.graph_data.days,
+				data: app.cfg.graph_data.countries,
+				title: 'Confirmed (daily)',
 			});
 			
 			// Deaths Daily
@@ -375,8 +388,8 @@ var app = {
 				type: 'bar',
 				id: 'deaths_daily',
 				category: 'deaths',
-				days: data.days,
-				data: data.countries,
+				days: app.cfg.graph_data.days,
+				data: app.cfg.graph_data.countries,
 				title: 'Deaths (daily)',
 			});
 			
@@ -385,8 +398,8 @@ var app = {
 				type: 'bar',
 				id: 'recovered_daily',
 				category: 'recovered',
-				days: data.days,
-				data: data.countries,
+				days: app.cfg.graph_data.days,
+				data: app.cfg.graph_data.countries,
 				title: 'Recovered (daily)',
 			});
 			
@@ -407,6 +420,7 @@ var app = {
 				for (var i in options.data) {
 					series[i] = {
 						name: app.cfg.countries_selected[i],
+						category: options.category,
 						data: [],
 					};
 					for (var d in options.data[i][options.id]) {
@@ -423,6 +437,7 @@ var app = {
 					for (var i in options.data) {
 						series[i] = {
 							name: app.cfg.countries_selected[i],
+							category: options.category,
 							data: [],
 						};
 						for (var d in options.data[i][options.id]) {
@@ -436,6 +451,7 @@ var app = {
 					for (var i in options.data) {
 						series[i] = {
 							name: app.cfg.countries_selected[i],
+							category: options.category,
 							data: [],
 						};
 						for (var d in options.data[i][options.id]) {
@@ -464,7 +480,16 @@ var app = {
 						formatter: function (value) {
 							return 'Day ' + value;
 						}
-					}
+					},
+					y: {
+						formatter: function (value, config) {
+							var country = config.w.config.series[config.seriesIndex].name;
+							var category = config.w.config.series[config.seriesIndex].category;
+							var data_serie = app.cfg.graph_data.countries[config.seriesIndex][category + '_increment'];
+							var increment = data_serie[config.dataPointIndex];
+							return app.aux.numberFormat(value) + ' <span style="font-weight: normal;">(' + (increment >= 0 ? '+' : '-') + app.aux.numberFormat(increment, 1) + '%)</span>';
+						}
+					},
 				},
 				dataLabels: {
 					enabled: false
