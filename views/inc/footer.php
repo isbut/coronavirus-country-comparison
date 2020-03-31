@@ -17,8 +17,17 @@
 
 </div>
 
-<div class="overlay overlay-bkg">
-	<div class="loader"><i class="fas fa-cog fa-spin"></i> Recalculating...</div>
+<div class="loader loader-bkg">
+	<div class="msg"><i class="fas fa-cog fa-spin"></i> Recalculating...</div>
+</div>
+
+<div class="overlay">
+	<div class="overlay-bkg">
+		<div class="graph-container">
+			<div class="close"><i class="fas fa-times" title="Close"></i></div>
+			<div id="graph-zoom" class="graph"></div>
+		</div>
+	</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -41,6 +50,7 @@
 	app.cfg.graph_palette = <?= json_encode($this->config['defaults']['graph_palette']) ?>;
 	app.cfg.info_palette = <?= json_encode($this->config['defaults']['info_palette']) ?>;
 	app.cfg.xaxis_lapse = <?= $this->config['defaults']['xaxis_lapse'] ?>;
+	app.cfg.xaxis_lapse_zoom = <?= $this->config['defaults']['xaxis_lapse_zoom'] ?>;
 	app.cfg.app_info = <?php include $this->config['paths']['data-json'] . '/' . $this->config['files']['app-info']; ?>;
 	app.cfg.cookie = <?= json_encode($this->config['defaults']['cookie']) ?>;
 </script>
