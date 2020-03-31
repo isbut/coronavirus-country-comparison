@@ -206,42 +206,6 @@
 			
 		</div>
 		
-		<h3>Daily increments</h3>
-		
-		<div class="row">
-			
-			<div class="col-md-12">
-				
-				<div class="card position-relative">
-					<div class="card-body">
-						<div id="graph-confirmed_increment" class="graph"></div>
-					</div>
-				</div>
-			
-			</div>
-			
-			<div class="col-md-12">
-				
-				<div class="card position-relative">
-					<div class="card-body">
-						<div id="graph-deaths_increment" class="graph"></div>
-					</div>
-				</div>
-			
-			</div>
-			
-			<div class="col-md-12">
-				
-				<div class="card position-relative">
-					<div class="card-body">
-						<div id="graph-recovered_increment" class="graph"></div>
-					</div>
-				</div>
-			
-			</div>
-		
-		</div>
-		
 		<div class="disclaimer">
 			(*) Isbut declines all responsibility about the accuracy and veracity of the data shown here.<br />
 			This information must not be used for medical purposes.
