@@ -375,7 +375,7 @@ var app = {
 			
 			// Confirmed Daily
 			app.graphs.draw({
-				type: 'bar',
+				type: 'area',
 				id: 'confirmed_daily',
 				category: 'confirmed',
 				days: app.cfg.graph_data.days,
@@ -385,7 +385,7 @@ var app = {
 			
 			// Deaths Daily
 			app.graphs.draw({
-				type: 'bar',
+				type: 'area',
 				id: 'deaths_daily',
 				category: 'deaths',
 				days: app.cfg.graph_data.days,
@@ -395,38 +395,8 @@ var app = {
 			
 			// Recovered Daily
 			app.graphs.draw({
-				type: 'bar',
+				type: 'area',
 				id: 'recovered_daily',
-				category: 'recovered',
-				days: app.cfg.graph_data.days,
-				data: app.cfg.graph_data.countries,
-				title: 'Recovered (daily)',
-			});
-			
-			// Confirmed Increment
-			app.graphs.draw({
-				type: 'area',
-				id: 'confirmed_increment',
-				category: 'confirmed',
-				days: app.cfg.graph_data.days,
-				data: app.cfg.graph_data.countries,
-				title: 'Confirmed (daily)',
-			});
-			
-			// Deaths Increment
-			app.graphs.draw({
-				type: 'area',
-				id: 'deaths_increment',
-				category: 'deaths',
-				days: app.cfg.graph_data.days,
-				data: app.cfg.graph_data.countries,
-				title: 'Deaths (daily)',
-			});
-			
-			// Recovered Increment
-			app.graphs.draw({
-				type: 'area',
-				id: 'recovered_increment',
 				category: 'recovered',
 				days: app.cfg.graph_data.days,
 				data: app.cfg.graph_data.countries,
@@ -444,7 +414,7 @@ var app = {
 			
 			var series = [];
 			
-			if (app.cfg.mode == 'absolute' || options.type == 'area') {
+			if (app.cfg.mode == 'absolute') {
 				// Absolute
 				
 				for (var i in options.data) {
@@ -560,6 +530,7 @@ var app = {
 					graph_options.chart.toolbar.offsetX = -23;
 					graph_options.chart.height = 350;
 					graph_options.chart.type = 'line';
+					graph_options.stroke.curve = 'straight';
 					if (app.cfg.graph_mode == 'logarithmic') {
 						var t = [];
 						for (var n in series) {
@@ -585,7 +556,7 @@ var app = {
 							var data_serie = app.cfg.graph_data.countries[config.seriesIndex][category + '_increment'];
 							var increment = data_serie[config.dataPointIndex];
 							return app.aux.numberFormat(value)
-								+ ' <span style="font-weight: normal;">(' + (increment >= 0 ? '+' : '-') + app.aux.numberFormat(increment, 1) + '%)</span>';
+								+ ' <span style="font-weight: normal;">(' + (increment >= 0 ? '+' : '') + app.aux.numberFormat(increment, 1) + '%)</span>';
 						}
 					};
 					if (app.cfg.mode == 'absolute') {
@@ -595,14 +566,28 @@ var app = {
 					}
 					break;
 				
-				case 'bar':
+				case 'area':
 					graph_options.chart.toolbar.offsetX = 0;
-					graph_options.chart.height = 250;
-					graph_options.chart.type = 'bar';
-					graph_options.tooltip.shared = false;
-					graph_options.tooltip.followCursor = true;
-					graph_options.tooltip.intersect = false;
-					graph_options.yaxis.min = 0;
+					graph_options.chart.height = 280;
+					graph_options.chart.type = 'area';
+					graph_options.stroke.curve = 'smooth';
+					if (app.cfg.graph_mode == 'logarithmic') {
+						var t = [];
+						for (var n in series) {
+							t.push(series[n].data[0]);
+						}
+						graph_options.yaxis.logarithmic = true;
+						graph_options.yaxis.min = Math.min.apply(null, t) + 1;
+						graph_options.yaxis.max = function (max) {
+							return max * 1.2;
+						};
+					} else {
+						graph_options.yaxis.logarithmic = false;
+						graph_options.yaxis.min = 0;
+						graph_options.yaxis.max = function (max) {
+							return max;
+						};
+					}
 					graph_options.tooltip.y = {
 						formatter: function (value, config) {
 							if (typeof value == 'undefined') return value;
@@ -610,7 +595,7 @@ var app = {
 							var category = config.w.config.series[config.seriesIndex].category;
 							var data_serie = app.cfg.graph_data.countries[config.seriesIndex][category + '_increment'];
 							var increment = data_serie[config.dataPointIndex];
-							return app.aux.numberFormat(value) + ' <span style="font-weight: normal;">(' + (increment >= 0 ? '+' : '-') + app.aux.numberFormat(increment, 1) + '%)</span>';
+							return app.aux.numberFormat(value) + ' <span style="font-weight: normal;">(' + (increment >= 0 ? '+' : '') + app.aux.numberFormat(increment, 1) + '%)</span>';
 						}
 					};
 					if (app.cfg.mode == 'absolute') {
@@ -620,27 +605,45 @@ var app = {
 					}
 					break;
 				
-				case 'area':
+				/*case 'area':
 					graph_options.chart.toolbar.offsetX = 0;
-					graph_options.chart.height = 250;
+					graph_options.chart.height = 280;
 					graph_options.chart.type = 'area';
 					graph_options.yaxis.logarithmic = false;
-					graph_options.yaxis.min = 0;
-					graph_options.yaxis.max = function (max) {
-						return max;
+					graph_options.yaxis.min = function (min) {
+						return min;
 					};
+					graph_options.yaxis.max = 300;
 					graph_options.tooltip.y = {
 						formatter: function (value, config) {
 							if (typeof value == 'undefined') return value;
-							return (value >= 0 ? '+' : '-') + app.aux.numberFormat(value, 1) + '%';
+							return (value >= 0 ? '+' : '') + app.aux.numberFormat(value, 1) + '%';
 						}
 					};
 					graph_options.yaxis.title.text = 'Daily increment';
-					break;
+					graph_options.annotations = {
+						yaxis: [{
+							y: 0,
+							borderColor: '#000000',
+							opacity: 0.5,
+							label: {
+								borderColor: '#444444',
+								text: 'Negative',
+								position: 'left',
+								offsetX: 60,
+								style: {
+									background: '#444444',
+									color: '#ffffff',
+								},
+								
+							},
+						}],
+					};
+					break;*/
 				
 			}
 			
-			if (app.cfg.mode == 'absolute' || options.type == 'area') {
+			if (app.cfg.mode == 'absolute') {
 				
 				graph_options.yaxis.decimalsInFloat = 0;
 			
