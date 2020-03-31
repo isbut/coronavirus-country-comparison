@@ -13,14 +13,10 @@ var app = {
 		info_palette: [],
 		xaxis_lapses: {},
 		initialized: false,
-		charts: {
-			confirmed: null,
-			active: null,
-			deaths: null,
-			recovered: null,
-		},
+		charts: {},
 		ranking_table: null,
 		xaxis_labels: [],
+		xaxis_labels_zoom: [],
 		cookie: {},
 		graph_data: {},
 		obj: null,
@@ -48,8 +44,6 @@ var app = {
 		$('div.menu-graph button').on('click', function () {
 			app.options.changeGraphMode($(this).attr('data-value'));
 		});
-		
-		$('div.graph-container div.resizer button').on('click', app.graphs.resize);
 		
 		$('[data-toggle="tooltip"]').tooltip();
 		
@@ -107,6 +101,8 @@ var app = {
 				$('footer .share .copy').tooltip('hide').tooltip('dispose');
 			}, 2000);
 		});
+		
+		app.graphs.zoom.init();
 		
 		app.country.change(0, app.cfg.countries_selected[0], true);
 		app.country.change(1, app.cfg.countries_selected[1], true);
@@ -354,74 +350,31 @@ var app = {
 				}
 			}
 			
-			// Confirmed
-			app.graphs.draw({
-				type: 'line',
-				id: 'confirmed',
-				category: 'confirmed',
-				days: app.cfg.graph_data.days,
-				data: app.cfg.graph_data.countries,
-				title: 'Confirmed',
-			});
+			app.cfg.xaxis_labels_zoom = [];
+			var steps = Math.floor(app.cfg.graph_data.days / app.cfg.xaxis_lapse_zoom);
+			var count = 0;
+			for (var i=1; i<=app.cfg.graph_data.days+1; i++) {
+				if (count == steps) {
+					app.cfg.xaxis_labels_zoom.push(i);
+					count = 0;
+				} else {
+					app.cfg.xaxis_labels_zoom.push('');
+					count++;
+				}
+			}
 			
-			// Active
-			app.graphs.draw({
-				type: 'line',
-				id: 'active',
-				category: 'active',
-				days: app.cfg.graph_data.days,
-				data: app.cfg.graph_data.countries,
-				title: 'Active',
-			});
-			
-			// Deaths
-			app.graphs.draw({
-				type: 'line',
-				id: 'deaths',
-				category: 'deaths',
-				days: app.cfg.graph_data.days,
-				data: app.cfg.graph_data.countries,
-				title: 'Deaths',
-			});
-			
-			// Recovered
-			app.graphs.draw({
-				type: 'line',
-				id: 'recovered',
-				category: 'recovered',
-				days: app.cfg.graph_data.days,
-				data: app.cfg.graph_data.countries,
-				title: 'Recovered',
-			});
-			
-			// Confirmed Daily
-			app.graphs.draw({
-				type: 'area',
-				id: 'confirmed_daily',
-				category: 'confirmed',
-				days: app.cfg.graph_data.days,
-				data: app.cfg.graph_data.countries,
-				title: 'Confirmed (daily)',
-			});
-			
-			// Deaths Daily
-			app.graphs.draw({
-				type: 'area',
-				id: 'deaths_daily',
-				category: 'deaths',
-				days: app.cfg.graph_data.days,
-				data: app.cfg.graph_data.countries,
-				title: 'Deaths (daily)',
-			});
-			
-			// Recovered Daily
-			app.graphs.draw({
-				type: 'area',
-				id: 'recovered_daily',
-				category: 'recovered',
-				days: app.cfg.graph_data.days,
-				data: app.cfg.graph_data.countries,
-				title: 'Recovered (daily)',
+			$('.main-graphs .graph').each(function () {
+				
+				app.graphs.draw({
+					type: $(this).attr('data-type'),
+					id: $(this).attr('data-id'),
+					selector: $(this).attr('data-selector'),
+					category: $(this).attr('data-category'),
+					days: app.cfg.graph_data.days,
+					data: app.cfg.graph_data.countries,
+					title: $(this).attr('data-title'),
+				});
+				
 			});
 			
 		},
@@ -529,9 +482,6 @@ var app = {
 					},
 					labels: {
 						hideOverlappingLabels: false,
-						formatter: function (value, timestamp, index) {
-							return app.cfg.xaxis_labels[parseInt(value) - 1];
-						}
 					},
 					tooltip: {
 						enabled: false,
@@ -588,7 +538,7 @@ var app = {
 					break;
 				
 				case 'area':
-					graph_options.chart.toolbar.offsetX = 0;
+					graph_options.chart.toolbar.offsetX = -23;
 					graph_options.chart.height = 280;
 					graph_options.chart.type = 'area';
 					graph_options.stroke.curve = 'smooth';
@@ -626,41 +576,21 @@ var app = {
 					}
 					break;
 				
-				/*case 'area':
-					graph_options.chart.toolbar.offsetX = 0;
-					graph_options.chart.height = 280;
-					graph_options.chart.type = 'area';
-					graph_options.yaxis.logarithmic = false;
-					graph_options.yaxis.min = function (min) {
-						return min;
-					};
-					graph_options.yaxis.max = 300;
-					graph_options.tooltip.y = {
-						formatter: function (value, config) {
-							if (typeof value == 'undefined') return value;
-							return (value >= 0 ? '+' : '') + app.aux.numberFormat(value, 1) + '%';
-						}
-					};
-					graph_options.yaxis.title.text = 'Daily increment';
-					graph_options.annotations = {
-						yaxis: [{
-							y: 0,
-							borderColor: '#000000',
-							opacity: 0.5,
-							label: {
-								borderColor: '#444444',
-								text: 'Negative',
-								position: 'left',
-								offsetX: 60,
-								style: {
-									background: '#444444',
-									color: '#ffffff',
-								},
-								
-							},
-						}],
-					};
-					break;*/
+			}
+			
+			if (options.selector == 'graph-zoom') {
+				
+				graph_options.chart.width = '100%';
+				graph_options.chart.height = '100%';
+				graph_options.xaxis.labels.formatter = function (value, timestamp, index) {
+					return app.cfg.xaxis_labels_zoom[parseInt(value) - 1];
+				};
+				
+			} else {
+				
+				graph_options.xaxis.labels.formatter = function (value, timestamp, index) {
+					return app.cfg.xaxis_labels[parseInt(value) - 1];
+				};
 				
 			}
 			
@@ -674,27 +604,63 @@ var app = {
 				
 			}
 			
-			if (app.cfg.initialized) {
+			if (app.cfg.initialized && typeof app.cfg.charts[options.selector] !== 'undefined') {
 				
-				app.cfg.charts[options.id].destroy();
+				app.cfg.charts[options.selector].destroy();
 				
 			}
 			
-			app.cfg.charts[options.id] = new ApexCharts(document.querySelector('#graph-' + options.id), graph_options);
-			app.cfg.charts[options.id].render();
+			app.cfg.charts[options.selector] = new ApexCharts(document.querySelector('#' + options.selector), graph_options);
+			app.cfg.charts[options.selector].render();
 			
 		},
 		
-		resize: function () {
+		zoom: {
 			
-			if ($(this).closest('div.graph-container').hasClass('col-md-12')) {
+			init: function () {
 				
-				$(this).closest('div.graph-container').removeClass('col-md-12').addClass('col-md-6');
+				$('div.graph-container div.resizer button').on('click', app.graphs.zoom.launch);
+				$('.overlay .close').on('click', app.graphs.zoom.close);
 				
-			} else {
+			},
+			
+			launch: function () {
 				
-				$('div.graph-container').removeClass('col-md-12');
-				$(this).closest('div.graph-container').addClass('col-md-12');
+				app.cfg.obj = $(this);
+				
+				$('div.overlay').fadeIn(function () {
+					
+					var g = app.cfg.obj.closest('.card').find('div.graph');
+					
+					app.graphs.draw({
+						type: g.attr('data-type'),
+						id: g.attr('data-id'),
+						selector: 'graph-zoom',
+						category: g.attr('data-category'),
+						days: app.cfg.graph_data.days,
+						data: app.cfg.graph_data.countries,
+						title: g.attr('data-title'),
+					});
+					
+				});
+				
+				/*if ($(this).closest('div.graph-container').hasClass('col-md-12')) {
+					
+					$(this).closest('div.graph-container').removeClass('col-md-12').addClass('col-md-6');
+					
+				} else {
+					
+					$('div.graph-container').removeClass('col-md-12');
+					$(this).closest('div.graph-container').addClass('col-md-12');
+					
+				}*/
+				
+			},
+			
+			close: function () {
+				
+				app.cfg.charts['graph-zoom'].destroy();
+				$('div.overlay').fadeOut();
 				
 			}
 			
@@ -859,11 +825,11 @@ var app = {
 		},
 		
 		pageLock: function () {
-			$('.overlay').show();
+			$('.loader').show();
 		},
 		
 		pageUnlock: function () {
-			$('.overlay').hide();
+			$('.loader').hide();
 		},
 		
 	},

@@ -29,6 +29,7 @@ return [
 		'relative_num' => 100000,
 		'countries_max' => 6,
 		'xaxis_lapse' => 20,
+		'xaxis_lapse_zoom' => 50,
 		'cookie' => [
 			'life' => 30,
 			'name' => 'isbutccc',

@@ -107,16 +107,22 @@
 		
 		<h3>Acummulative cases</h3>
 		
-		<div class="row">
+		<div class="main-graphs row">
 		
 			<div class="graph-container col-md-6">
 				
 				<div class="card position-relative">
 					<div class="resizer">
-						<button class="btn float-right"><i class="fas fa-arrows-alt-h"></i></button>
+						<button class="btn float-right"><i class="fas fa-search-plus" title="Enlarge this graph"></i></button>
 					</div>
 					<div class="card-body">
-						<div id="graph-confirmed" class="graph"></div>
+						<div id="graph-confirmed"
+						     data-type="line"
+						     data-id="confirmed"
+						     data-selector="graph-confirmed"
+						     data-category="confirmed"
+						     data-title="Confirmed"
+						     class="graph"></div>
 					</div>
 				</div>
 				
@@ -126,13 +132,16 @@
 				
 				<div class="card position-relative">
 					<div class="resizer">
-						<button class="btn float-right"><i class="fas fa-arrows-alt-h"></i></button>
+						<button class="btn float-right"><i class="fas fa-search-plus" title="Enlarge this graph"></i></button>
 					</div>
 					<div class="card-body">
-						<div>
-						
-						</div>
-						<div id="graph-active" class="graph"></div>
+						<div id="graph-active"
+						     data-type="line"
+						     data-id="active"
+						     data-selector="graph-active"
+						     data-category="active"
+						     data-title="Active"
+						     class="graph"></div>
 					</div>
 				</div>
 				
@@ -140,16 +149,22 @@
 			
 		</div>
 		
-		<div class="row">
+		<div class="main-graphs row">
 			
 			<div class="graph-container col-md-6">
 				
 				<div class="card position-relative">
 					<div class="resizer">
-						<button class="btn float-right"><i class="fas fa-arrows-alt-h"></i></button>
+						<button class="btn float-right"><i class="fas fa-search-plus" title="Enlarge this graph"></i></button>
 					</div>
 					<div class="card-body">
-						<div id="graph-deaths" class="graph"></div>
+						<div id="graph-deaths"
+						     data-type="line"
+						     data-id="deaths"
+						     data-selector="graph-deaths"
+						     data-category="deaths"
+						     data-title="Deaths"
+						     class="graph"></div>
 					</div>
 				</div>
 				
@@ -159,10 +174,16 @@
 				
 				<div class="card position-relative">
 					<div class="resizer">
-						<button class="btn float-right"><i class="fas fa-arrows-alt-h"></i></button>
+						<button class="btn float-right"><i class="fas fa-search-plus" title="Enlarge this graph"></i></button>
 					</div>
 					<div class="card-body">
-						<div id="graph-recovered" class="graph"></div>
+						<div id="graph-recovered"
+						     data-type="line"
+						     data-id="recovered"
+						     data-selector="graph-recovered"
+						     data-category="recovered"
+						     data-title="Recovered"
+						     class="graph"></div>
 					</div>
 				</div>
 				
@@ -172,33 +193,60 @@
 		
 		<h3>Daily cases</h3>
 		
-		<div class="row">
+		<div class="main-graphs row">
 			
-			<div class="col-md-12">
+			<div class="graph-container col-md-12">
 				
 				<div class="card position-relative">
+					<div class="resizer">
+						<button class="btn float-right"><i class="fas fa-search-plus" title="Enlarge this graph"></i></button>
+					</div>
 					<div class="card-body">
-						<div id="graph-confirmed_daily" class="graph"></div>
+						<div id="graph-confirmed_daily"
+						     data-type="area"
+						     data-id="confirmed_daily"
+						     data-selector="graph-confirmed_daily"
+						     data-category="confirmed"
+						     data-title="Confirmed (daily)"
+						     class="graph"></div>
 					</div>
 				</div>
 				
 			</div>
 			
-			<div class="col-md-12">
+			<div class="graph-container col-md-12">
 				
 				<div class="card position-relative">
+					<div class="resizer">
+						<button class="btn float-right"><i class="fas fa-search-plus" title="Enlarge this graph"></i></button>
+					</div>
 					<div class="card-body">
-						<div id="graph-deaths_daily" class="graph"></div>
+						<div id="graph-deaths_daily"
+						     data-type="area"
+						     data-id="deaths_daily"
+						     data-selector="graph-deaths_daily"
+						     data-category="deaths"
+						     data-title="Deaths (daily)"
+						     class="graph"></div>
 					</div>
 				</div>
 				
 			</div>
 			
-			<div class="col-md-12">
+			<div class="graph-container col-md-12">
 				
 				<div class="card position-relative">
+					<div class="resizer">
+						<button class="btn float-right"><i class="fas fa-search-plus" title="Enlarge this graph"></i></button>
+					</div>
 					<div class="card-body">
-						<div id="graph-recovered_daily" class="graph"></div>
+						<div id="graph-recovered_daily"
+						     data-type="area"
+						     data-id="recovered_daily"
+						     data-selector="graph-recovered_daily"
+						     data-category="recovered"
+						     data-title="Recovered (daily)"
+						     class="graph"></div>
 					</div>
 				</div>
 				
