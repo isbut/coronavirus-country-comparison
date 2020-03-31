@@ -23,6 +23,7 @@ var app = {
 		xaxis_labels: [],
 		cookie: {},
 		graph_data: {},
+		obj: null,
 		
 	},
 	
@@ -153,41 +154,59 @@ var app = {
 		
 		extraAdd: function () {
 			
-			var country = $(this).closest('div.country-add').find('select').val();
-			var country_data = app.cfg.countries_data[country];
-			var extra_num = $('div.countries-extra-list div.country-extra').length;
+			app.cfg.obj = $(this);
 			
-			var html = '<div class="country-extra" data-country="' + (extra_num + 2) + '" data-country-name="' + country + '">'
-				+ '<ul class="list-group list-group-horizontal">'
-				+ '<li class="list-group-item list-group-item-secondary">' + country
-				+ '<div class="info-start"><strong class="color-start">Graph start:</strong> <span></span></div>'
-				+ '</li>'
-				+ '<li class="list-group-item"><strong class="color-population">Population:</strong> <span>' + app.aux.numberFormat(country_data['population']) + '</span></li>'
-				+ '<li class="list-group-item"><strong class="color-confirmed">Confirmed:</strong> <span>' + app.aux.numberFormat(country_data['confirmed']) + '</span></li>'
-				+ '<li class="list-group-item"><strong class="color-active">Active:</strong> <span>' + app.aux.numberFormat(country_data['active']) + '</span></li>'
-				+ '<li class="list-group-item"><strong class="color-deaths">Deaths:</strong> <span>' + app.aux.numberFormat(country_data['deaths']) + '</span></li>'
-				+ '<li class="list-group-item"><strong class="color-recovered">Recovered:</strong> <span>' + app.aux.numberFormat(country_data['recovered']) + '</span></li>'
-				+ '<li class="list-group-item"><button type="button" class="close" title="Delete"><span aria-hidden="true">&times;</span></button></li>'
-				+ '</ul>'
-				+ '</div>';
+			app.aux.pageLock();
 			
-			$(html).hide().appendTo('div.countries-extra-list').slideDown();
-			
-			app.cfg.countries_selected[extra_num + 2] = country;
-			
-			if ((extra_num + 3) >= app.cfg.countries_max) {
-				$('div.country-add button').prop('disabled', true).addClass('disabled');
-			}
-			
-			app.graphs.refresh();
+			setTimeout(function () {
+				
+				var country = app.cfg.obj.closest('div.country-add').find('select').val();
+				var country_data = app.cfg.countries_data[country];
+				var extra_num = $('div.countries-extra-list div.country-extra').length;
+				
+				var html = '<div class="country-extra" data-country="' + (extra_num + 2) + '" data-country-name="' + country + '">'
+					+ '<ul class="list-group list-group-horizontal">'
+					+ '<li class="list-group-item list-group-item-secondary">' + country
+					+ '<div class="info-start"><strong class="color-start">Graph start:</strong> <span></span></div>'
+					+ '</li>'
+					+ '<li class="list-group-item"><strong class="color-population">Population:</strong> <span>' + app.aux.numberFormat(country_data['population']) + '</span></li>'
+					+ '<li class="list-group-item"><strong class="color-confirmed">Confirmed:</strong> <span>' + app.aux.numberFormat(country_data['confirmed']) + '</span></li>'
+					+ '<li class="list-group-item"><strong class="color-active">Active:</strong> <span>' + app.aux.numberFormat(country_data['active']) + '</span></li>'
+					+ '<li class="list-group-item"><strong class="color-deaths">Deaths:</strong> <span>' + app.aux.numberFormat(country_data['deaths']) + '</span></li>'
+					+ '<li class="list-group-item"><strong class="color-recovered">Recovered:</strong> <span>' + app.aux.numberFormat(country_data['recovered']) + '</span></li>'
+					+ '<li class="list-group-item"><button type="button" class="close" title="Delete"><span aria-hidden="true">&times;</span></button></li>'
+					+ '</ul>'
+					+ '</div>';
+				
+				$(html).hide().appendTo('div.countries-extra-list').slideDown();
+				
+				app.cfg.countries_selected[extra_num + 2] = country;
+				
+				if ((extra_num + 3) >= app.cfg.countries_max) {
+					$('div.country-add button').prop('disabled', true).addClass('disabled');
+				}
+				
+				app.graphs.refresh();
+				
+				app.aux.pageUnlock();
+				
+			}, 500);
 			
 		},
 		
 		extraRemove: function () {
 			
-			$(this).closest('div.country-extra').slideUp(function () {
+			app.cfg.obj = $(this);
+			
+			app.aux.pageLock();
+			
+			setTimeout(function () {
 				
-				$(this).remove();
+				app.cfg.obj.closest('div.country-extra').slideUp(function () {
+					
+					$(this).remove();
+					
+				});
 				
 				app.cfg.countries_selected = [];
 				app.cfg.countries_selected[0] = $('div[data-country="0"] select').val();
@@ -197,7 +216,7 @@ var app = {
 				
 				$('div.countries-extra-list div.country-extra').each(function () {
 					
-					app.cfg.countries_selected[n] = $(this).attr('data-country-name');
+					app.cfg.countries_selected[n] = app.cfg.obj.attr('data-country-name');
 					
 					n++;
 					
@@ -207,7 +226,9 @@ var app = {
 				
 				app.graphs.refresh();
 				
-			});
+				app.aux.pageUnlock();
+				
+			}, 500);
 		
 		},
 		
@@ -653,16 +674,14 @@ var app = {
 				
 			}
 			
-			if (!app.cfg.initialized) {
+			if (app.cfg.initialized) {
 				
-				app.cfg.charts[options.id] = new ApexCharts(document.querySelector('#graph-' + options.id), graph_options);
-				app.cfg.charts[options.id].render();
-				
-			} else {
-				
-				app.cfg.charts[options.id].updateOptions(graph_options);
+				app.cfg.charts[options.id].destroy();
 				
 			}
+			
+			app.cfg.charts[options.id] = new ApexCharts(document.querySelector('#graph-' + options.id), graph_options);
+			app.cfg.charts[options.id].render();
 			
 		},
 		
@@ -687,46 +706,70 @@ var app = {
 		
 		changeMode: function (mode, init) {
 			
-			init = typeof init === 'undefined' ? false : init;
+			app.aux.pageLock();
 			
-			$('div.menu-mode button').removeClass('btn-dark').addClass('btn-outline-dark');
-			$('div.menu-mode button[data-value="' + mode + '"]').removeClass('btn-outline-dark').addClass('btn-dark');
-			
-			app.cfg.mode = mode;
-			
-			if (!init) {
-				app.graphs.refresh();
-			}
+			setTimeout(function () {
+				
+				init = typeof init === 'undefined' ? false : init;
+				
+				$('div.menu-mode button').removeClass('btn-dark').addClass('btn-outline-dark');
+				$('div.menu-mode button[data-value="' + mode + '"]').removeClass('btn-outline-dark').addClass('btn-dark');
+				
+				app.cfg.mode = mode;
+				
+				if (!init) {
+					app.graphs.refresh();
+				}
+				
+				app.aux.pageUnlock();
+				
+			}, 500);
 			
 		},
 		
 		changeStart: function (start, init) {
 			
-			init = typeof init === 'undefined' ? false : init;
+			app.aux.pageLock();
 			
-			$('div.menu-start button').removeClass('btn-dark').addClass('btn-outline-dark');
-			$('div.menu-start button[data-value="' + start + '"]').removeClass('btn-outline-dark').addClass('btn-dark');
-			
-			app.cfg.start = parseInt(start);
-			
-			if (!init) {
-				app.graphs.refresh();
-			}
+			setTimeout(function () {
+				
+				init = typeof init === 'undefined' ? false : init;
+				
+				$('div.menu-start button').removeClass('btn-dark').addClass('btn-outline-dark');
+				$('div.menu-start button[data-value="' + start + '"]').removeClass('btn-outline-dark').addClass('btn-dark');
+				
+				app.cfg.start = parseInt(start);
+				
+				if (!init) {
+					app.graphs.refresh();
+				}
+				
+				app.aux.pageUnlock();
+				
+			}, 500);
 			
 		},
 		
 		changeGraphMode: function (graph_mode, init) {
 			
-			init = typeof init === 'undefined' ? false : init;
+			app.aux.pageLock();
 			
-			$('div.menu-graph button').removeClass('btn-dark').addClass('btn-outline-dark');
-			$('div.menu-graph button[data-value="' + graph_mode + '"]').removeClass('btn-outline-dark').addClass('btn-dark');
-			
-			app.cfg.graph_mode = graph_mode;
-			
-			if (!init) {
-				app.graphs.refresh();
-			}
+			setTimeout(function () {
+				
+				init = typeof init === 'undefined' ? false : init;
+				
+				$('div.menu-graph button').removeClass('btn-dark').addClass('btn-outline-dark');
+				$('div.menu-graph button[data-value="' + graph_mode + '"]').removeClass('btn-outline-dark').addClass('btn-dark');
+				
+				app.cfg.graph_mode = graph_mode;
+				
+				if (!init) {
+					app.graphs.refresh();
+				}
+				
+				app.aux.pageUnlock();
+				
+			}, 500);
 			
 		}
 		
@@ -813,6 +856,14 @@ var app = {
 			var t = date.split('-');
 			return t[2] + '/' + t[1] + '/' + t[0];
 			
+		},
+		
+		pageLock: function () {
+			$('.overlay').show();
+		},
+		
+		pageUnlock: function () {
+			$('.overlay').hide();
 		},
 		
 	},
