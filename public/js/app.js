@@ -254,6 +254,10 @@ var app = {
 				days_max = 0,
 				days = 0,
 				count = false,
+				confirmed = 0,
+				active = 0,
+				deaths = 0,
+				recovered = 0,
 				t = {};
 			
 			for (var p = 0; p < app.cfg.countries_selected.length; p++) {
@@ -286,11 +290,17 @@ var app = {
 							t.graph_start = day;
 						}
 						
+						confirmed = (app.cfg.graph_mode == 'logarithmic' && app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].confirmed == 0) ? 0.1 : app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].confirmed;
+						active = (app.cfg.graph_mode == 'logarithmic' && app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].active == 0) ? 0.1 : app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].active;
+						deaths = (app.cfg.graph_mode == 'logarithmic' && app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].deaths == 0) ? 0.1 : app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].deaths;
+						recovered = (app.cfg.graph_mode == 'logarithmic' && app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].recovered == 0) ? 0.1 : app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].recovered;
+						
 						t.days_list.push(app.aux.dateFormat(day));
-						t.confirmed.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].confirmed);
-						t.active.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].active);
-						t.deaths.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].deaths);
-						t.recovered.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].recovered);
+						
+						t.confirmed.push(confirmed);
+						t.active.push(active);
+						t.deaths.push(deaths);
+						t.recovered.push(recovered);
 						t.confirmed_daily.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].confirmed_daily);
 						t.active_daily.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].active_daily);
 						t.deaths_daily.push(app.cfg.countries_data[app.cfg.countries_selected[p]].timeline[day].deaths_daily);
@@ -542,23 +552,11 @@ var app = {
 					graph_options.chart.height = 280;
 					graph_options.chart.type = 'area';
 					graph_options.stroke.curve = 'smooth';
-					if (app.cfg.graph_mode == 'logarithmic') {
-						var t = [];
-						for (var n in series) {
-							t.push(series[n].data[0]);
-						}
-						graph_options.yaxis.logarithmic = true;
-						graph_options.yaxis.min = Math.min.apply(null, t) + 1;
-						graph_options.yaxis.max = function (max) {
-							return max * 1.2;
-						};
-					} else {
-						graph_options.yaxis.logarithmic = false;
-						graph_options.yaxis.min = 0;
-						graph_options.yaxis.max = function (max) {
-							return max;
-						};
-					}
+					graph_options.yaxis.logarithmic = false;
+					graph_options.yaxis.min = 0;
+					graph_options.yaxis.max = function (max) {
+						return max;
+					};
 					graph_options.tooltip.y = {
 						formatter: function (value, config) {
 							if (typeof value == 'undefined') return value;
